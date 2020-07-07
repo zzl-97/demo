@@ -1,8 +1,7 @@
-package com.huayei.testQuestions.repository
+package com.huayei.exam.testQuestions.repository
 
-import com.huayei.testQuestions.dto.TestQuestionsDto
-import com.huayei.testQuestions.event.Course
-import com.huayei.testQuestions.event.TestQuestions
+import com.huayei.exam.testQuestions.event.Course
+import com.huayei.exam.testQuestions.event.TestQuestions
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.data.jpa.repository.JpaRepository

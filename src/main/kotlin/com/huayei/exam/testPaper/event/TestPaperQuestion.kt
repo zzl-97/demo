@@ -1,4 +1,4 @@
-package com.huayei.testPaper.event
+package com.huayei.exam.testPaper.event
 
 import javax.persistence.*
 

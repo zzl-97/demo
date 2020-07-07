@@ -1,8 +1,8 @@
-package com.huayei.testQuestions.controller
+package com.huayei.exam.testQuestions.controller
 
-import com.huayei.testQuestions.dto.TestQuestionsDto
-import com.huayei.testQuestions.event.TestQuestions
-import com.huayei.testQuestions.repository.TestQuestionsRepository
+import com.huayei.exam.testQuestions.dto.TestQuestionsDto
+import com.huayei.exam.testQuestions.event.TestQuestions
+import com.huayei.exam.testQuestions.repository.TestQuestionsRepository
 import jxl.read.biff.BiffException
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile

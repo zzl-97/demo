@@ -1,7 +1,7 @@
-package com.huayei.testQuestions.dto
+package com.huayei.exam.testQuestions.dto
 
-import com.huayei.testQuestions.event.Course
-import com.huayei.testQuestions.event.TestPaper
+import com.huayei.exam.testQuestions.event.Course
+import com.huayei.exam.testQuestions.event.TestPaper
 
 data class TestPaperDto (
 

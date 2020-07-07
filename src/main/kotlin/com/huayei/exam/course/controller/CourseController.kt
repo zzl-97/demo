@@ -1,9 +1,7 @@
-package com.huayei.course.controller
+package com.huayei.exam.course.controller
 
 import com.huayei.testQuestions.dto.CourseDto
-import com.huayei.testQuestions.dto.TestQuestionsDto
 import com.huayei.testQuestions.event.Course
-import com.huayei.testQuestions.event.TestQuestions
 import com.huayei.testQuestions.repository.CourseRepository
 import org.springframework.data.domain.Sort
 import org.springframework.web.bind.annotation.*

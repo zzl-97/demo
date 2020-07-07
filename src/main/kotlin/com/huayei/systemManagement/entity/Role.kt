@@ -1,5 +1,6 @@
 package com.huayei.systemManagement.entity
 
+import com.huayei.systemManagement.DTO.DTORole
 import javax.persistence.*
 
 @Entity
@@ -10,7 +11,15 @@ data class Role(
     @GeneratedValue(strategy = GenerationType.AUTO)
     //自定义序列开始值
     @SequenceGenerator(name = "initialValue = 100")
-    var roleId: Int? = null,
+    var roleId: Long? = null,
     var roleName: String? = null
 ) {
+
+    fun dto():DTORole{
+
+        return  DTORole(
+           roleId = roleId,
+            roleName = roleName
+        )
+    }
 }

@@ -4,6 +4,7 @@ import com.huayei.systemManagement.DTO.DTOUser
 import com.huayei.systemManagement.entity.User
 import com.huayei.systemManagement.service.UserService
 import org.hibernate.sql.Update
+import org.springframework.data.repository.query.Param
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.annotation.Resource
@@ -66,6 +67,18 @@ class UserController(
         }
         return DTOUser(
             message = "删除成功"
+        )
+    }
+
+    //用户权限得操作 禁用启用删除
+    @PutMapping("/updateState.ait/{id}")
+    fun updateState(@PathVariable id:Long,@RequestParam state :Int):DTOUser{
+        userService.userRepository.findById(id).map {
+            it.STATE = state
+            userService.userRepository.save(it)
+        }
+        return DTOUser(
+            message = "用户状态修改成功"
         )
     }
 

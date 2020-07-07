@@ -1,7 +1,7 @@
-package com.huayei.testQuestions.event
+package com.huayei.exam.testQuestions.event
 
-import com.huayei.testQuestions.dto.CourseDto
-import com.huayei.testQuestions.dto.TestQuestionsDto
+import com.huayei.exam.testQuestions.dto.CourseDto
+import com.huayei.exam.testQuestions.dto.TestQuestionsDto
 import javax.persistence.*
 
 @Entity
