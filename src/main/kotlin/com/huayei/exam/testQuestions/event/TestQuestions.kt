@@ -1,6 +1,5 @@
 package com.huayei.exam.testQuestions.event
 
-import com.huayei.exam.testQuestions.dto.CourseDto
 import com.huayei.exam.testQuestions.dto.TestQuestionsDto
 import javax.persistence.*
 

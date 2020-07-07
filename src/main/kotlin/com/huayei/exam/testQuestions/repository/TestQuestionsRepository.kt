@@ -1,6 +1,6 @@
 package com.huayei.exam.testQuestions.repository
 
-import com.huayei.exam.testQuestions.event.Course
+
 import com.huayei.exam.testQuestions.event.TestQuestions
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional

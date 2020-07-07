@@ -1,6 +1,6 @@
 package com.huayei.exam.testQuestions.dto
 
-import com.huayei.exam.testQuestions.event.Course
+
 import com.huayei.exam.testQuestions.event.TestQuestions
 
 data class TestQuestionsDto (
