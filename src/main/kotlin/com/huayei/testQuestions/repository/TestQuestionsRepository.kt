@@ -14,5 +14,10 @@ import org.springframework.data.jpa.repository.Query
 interface TestQuestionsRepository : JpaRepository <TestQuestions,Int>, JpaSpecificationExecutor <TestQuestions>   {
 
     @Query(value = "select a from TestQuestions a left join Course b on a.courseId = b.courseId where b.courseName=?1")
-    fun findQuestionByCourseName(courseName : String) : Iterable<TestQuestionsDto>
+    fun findQuestionByCourseName(courseName : String) : TestQuestions
+
+    @Query(value = "select a from TestQuestions a left join Course b on a.courseId = b.courseId where b.courseId=?1")
+    fun findQuestionByCourseId(courseId : Int) : TestQuestions
+
+    fun findByCourseIdAndQuestionType(courseId : Int, type : String) : Iterable<TestQuestions>
 }

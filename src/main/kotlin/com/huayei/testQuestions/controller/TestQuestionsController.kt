@@ -1,12 +1,17 @@
 package com.huayei.testQuestions.controller
 
 import com.huayei.testQuestions.dto.TestQuestionsDto
-import com.huayei.testQuestions.event.Course
 import com.huayei.testQuestions.event.TestQuestions
 import com.huayei.testQuestions.repository.TestQuestionsRepository
+import jxl.read.biff.BiffException
 import org.springframework.web.bind.annotation.*
-import java.io.*
+import org.springframework.web.multipart.MultipartFile
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
 import java.net.URLEncoder
+import java.util.*
 import javax.servlet.http.HttpServletResponse
 
 /**
@@ -24,28 +29,53 @@ class TestQuestionsController(
 
 ) {
     @GetMapping("/hello")
-    fun getHelloworld(): String {
-        return "hello world"
+    fun getHelloworld(@RequestParam("uploadFile")  file : MultipartFile): String {
+       return file.getOriginalFilename()
+       // return "hello world"
     }
 
+
+    // 下载试题模板
     @GetMapping("/download")
-    @Throws(IOException::class)
-    fun downLoad(response: HttpServletResponse) {
-        //获取输入流
-        val bis = BufferedInputStream(FileInputStream(File("D:\\newFile\\url.txt")))
-        //转码，免得文件名中文乱码
-        val filename = URLEncoder.encode("试题导入模板", "UTF-8")
-        //设置文件下载头
-        response.addHeader("Content-Disposition", "attachment;filename=$filename")
-        //设置文件ContentType类型，这样设置，会自动判断下载文件类型
-        response.contentType = "application/octet-stream"
-        val out = BufferedOutputStream(response.outputStream)
-        var len = bis.read()
-        while ((len) != -1) {
-            out.write(len)
-            out.flush()
+    @Throws(FileNotFoundException::class)
+    fun downloadLocal(response: HttpServletResponse) { // 下载本地文件
+        val fileName = URLEncoder.encode("试题导入模板.xlsx","UTF-8") // 文件的默认保存名
+        // 读到流中
+        val inStream: InputStream = FileInputStream("D:\\newFile\\试题导入模板.xlsx") // 文件的存放路径
+        // 设置输出的格式
+        response.reset()
+        response.contentType = "bin"
+        response.addHeader("Content-Disposition", "attachment; filename=\"$fileName\"")
+        // 循环取出流中的数据
+        val b = ByteArray(100)
+        var len: Int
+        try {
+            while (inStream.read(b).also { len = it } > 0) response.outputStream.write(b, 0, len)
+            inStream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-        out.close()
+    }
+
+    //导入excel
+    @GetMapping("/excel")
+    @ResponseBody
+    @Throws(IOException::class, BiffException::class)
+    fun excelUser(file: MultipartFile?): String? {
+        val excel = ExcelController("C:\\Users\\12508\\Desktop\\用户表.xls")
+        excel.readExcel()
+        val list: List<*> = excel.outData()
+        val qiestionList: MutableList<TestQuestions> = ArrayList<TestQuestions>()
+        val n = TestQuestions()
+//        for (i in list.indices) {
+//            val str = list[i] as Array<String>
+//            n.setName(str[1])
+//            n.setPassword(str[2])
+//            n.setRoleId(str[3].toInt())
+//            userList.add(n)
+//        }
+        testQuestionsRepository.saveAll(qiestionList)
+        return "saved"
     }
 
     // 新增试题
@@ -75,13 +105,23 @@ class TestQuestionsController(
         return "修改成功！"
     }
 
-    //根据课程id查询试题
-    //查询账号密码
-    @PostMapping("/findById/{id}")
-    fun getQuestionById(@PathVariable id : Int, @RequestBody courseName : String): Iterable<TestQuestionsDto> {
-        return testQuestionsRepository.findQuestionByCourseName(courseName)
+    //根据课程名查询试题
+    @PostMapping("/findByCourseName")
+    fun getQuestionByCourseName(@RequestParam courseName : String): TestQuestionsDto {
+        return testQuestionsRepository.findQuestionByCourseName(courseName).dto()
     }
 
+    //根据课程id查询试题
+    @PostMapping("/findByCourseId/{id}")
+    fun getQuestionByCourseId(@PathVariable id : Int): TestQuestionsDto {
+        return testQuestionsRepository.findQuestionByCourseId(id).dto()
+    }
+
+    //根据课程id和题型查询试题
+    @PostMapping("/findByIdAndType/{id}")
+    fun getQuestionByIdAndType(@PathVariable id : Int, @RequestParam type : String): Iterable<TestQuestions> {
+        return testQuestionsRepository.findByCourseIdAndQuestionType(id, type)
+    }
 
 
 }

@@ -5,6 +5,7 @@ import com.huayei.testQuestions.dto.TestQuestionsDto
 import com.huayei.testQuestions.event.Course
 import com.huayei.testQuestions.event.TestQuestions
 import com.huayei.testQuestions.repository.CourseRepository
+import org.springframework.data.domain.Sort
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -48,5 +49,12 @@ class CourseController(
         }
         return "修改成功！"
     }
+
+    // 查全部课程信息
+    @GetMapping( "/all")
+    fun getAllCourse(): Iterable<Course> {
+        return courseRepository.findAll(Sort.by("courseId"))
+    }
+
 
 }
