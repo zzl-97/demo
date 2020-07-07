@@ -10,23 +10,23 @@ data class TestQuestions(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var questionId : Int ?= null,
+    var questionId : Int ?= null,// 试题id
 
-    var questionName : String ?= null,
+    var questionName : String ?= null,// 试题名
 
-    var questionType : String ?= null,
+    var questionType : String ?= null,// 试题类型
 
-    var answer : String ?= null,
+    var answer : String ?= null,// 答案
 
-    var optionA : String ?= null,
+    var optionA : String ?= null,// 选项A
 
-    var optionB : String ?= null,
+    var optionB : String ?= null,// 选项B
 
-    var optionC : String ?= null,
+    var optionC : String ?= null,// 选项C
 
-    var optionD : String ?= null,
+    var optionD : String ?= null,// 选项D
 
-    var courseId: Int? = null
+    var courseId: Int? = null// 课程id
 
 ) {
     fun dto() : TestQuestionsDto {

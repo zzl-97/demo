@@ -16,15 +16,15 @@ data class Course(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var courseId : Int ?= null,
+    var courseId : Int ?= null,// 课程id
 
-    var courseName : String ?= null,
+    var courseName : String ?= null,// 课程名
 
-    var coursePicture : String ?= null,
+    var coursePicture : String ?= null,// 课程图片
 
-    var courseIntroduce : String ?= null,
+    var courseIntroduce : String ?= null,// 课程介绍
 
-    var userId: Long ?= null
+    var userId: Long ?= null// 用户id
 
 ) {
     fun dto() : CourseDto{
