@@ -8,10 +8,16 @@ import java.sql.Date
 
 import javax.persistence.*
 
+/**
+*@Description TODO
+*Author zzl@huayei.com
+*Date 2020/7/7 18:19
+*@Since 1.0
+**/
+
 
 @Entity
 @Table(name = "t_user")
-
 data class User(
 
     @Id

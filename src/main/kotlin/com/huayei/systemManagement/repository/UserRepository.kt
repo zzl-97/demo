@@ -6,6 +6,13 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
+/**
+*@Description TODO
+*Author zzl@huayei.com
+*Date 2020/7/7 18:19
+*@Since 1.0
+**/
+
 
 @Repository
 @Transactional(readOnly = true)

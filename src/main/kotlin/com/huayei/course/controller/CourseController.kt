@@ -1,4 +1,4 @@
-package com.huayei.exam.course.controller
+package com.huayei.course.controller
 
 import com.huayei.testQuestions.dto.CourseDto
 import com.huayei.testQuestions.event.Course

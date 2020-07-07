@@ -6,6 +6,14 @@ import com.huayei.systemManagement.service.RoleService
 import org.springframework.web.bind.annotation.*
 import javax.persistence.Id
 
+/**
+*@Description TODO
+*Author zzl@huayei.com
+*Date 2020/7/7 18:18
+*@Since 1.0
+**/
+
+
 @RestController
 class RoleController(
 

@@ -4,6 +4,13 @@ import com.huayei.systemManagement.entity.MenuRole
 import com.huayei.systemManagement.repository.MenuRoleRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+/**
+*@Description TODO
+*Author zzl@huayei.com
+*Date 2020/7/7 18:19
+*@Since 1.0
+**/
+
 
 @Service
 @Transactional

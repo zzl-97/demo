@@ -2,6 +2,13 @@ package com.huayei.systemManagement.entity
 
 import com.huayei.systemManagement.DTO.DTORole
 import javax.persistence.*
+/**
+*@Description TODO
+*Author zzl@huayei.com
+*Date 2020/7/7 18:19
+*@Since 1.0
+**/
+
 
 @Entity
 @Table(name = "t_role")

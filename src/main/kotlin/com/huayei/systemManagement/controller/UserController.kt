@@ -8,6 +8,13 @@ import org.springframework.data.repository.query.Param
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.annotation.Resource
+/**
+*@Description TODO
+*Author zzl@huayei.com
+*Date 2020/7/7 18:19
+*@Since 1.0
+**/
+
 
 @RestController
 class UserController(

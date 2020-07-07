@@ -1,6 +1,13 @@
 package com.huayei.systemManagement.DTO
 
 import com.huayei.systemManagement.entity.MenuRole
+/**
+*@Description TODO
+*Author zzl@huayei.com
+*Date 2020/7/7 18:19
+*@Since 1.0
+**/
+
 
 data class DTOMenuRole(
 
