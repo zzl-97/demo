@@ -17,7 +17,6 @@ import javax.persistence.Id
 *@Since 1.0
 **/
 
-
 @RestController
 class MenuController(
     @Resource
