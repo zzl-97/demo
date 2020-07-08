@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
-@Repository
 /**
 *@Description TODO
 *Author zzl@huayei.com
@@ -13,7 +12,8 @@ import org.springframework.stereotype.Repository
 *@Since 1.0
 **/
 
-
+@Repository
+@org.springframework.transaction.annotation.Transactional(readOnly = true)
 interface RoleRepository :JpaRepository<Role,Long>,JpaSpecificationExecutor<Role>{
 
 

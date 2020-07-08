@@ -1,8 +1,10 @@
 package com.huayei.testQuestions.event
 
-import com.huayei.systemManagement.entity.User
 import com.huayei.testQuestions.dto.CourseDto
+import java.util.*
 import javax.persistence.*
+
+
 /**
 * @Description TODO
 * @Author liuh@huayei.com
@@ -16,19 +18,28 @@ data class Course(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var courseId : Int ?= null,// 课程id
+    var courseId : Int ?= null, // 课程id
 
-    var courseName : String ?= null,// 课程名
+    @Column(length = 64) // length default 255
+    var courseName : String ?= null, // 课程名
 
-    var coursePicture : String ?= null,// 课程图片
+    var coursePicture : String ?= null, // 课程图片
 
-    var courseIntroduce : String ?= null,// 课程介绍
+    var courseIntroduce : String ?= null, // 课程介绍
 
-    var userId: Long ?= null// 用户id
+    var userId: Long ?= null, // 用户id
+
+    // sonarLint  代码质量检测  detekt 代码质量检测  jacoco 测试覆盖率
+    var createDate: Date? = null // 创建时间
 
 ) {
     fun dto() : CourseDto{
         return CourseDto( courseId = courseId, courseName = courseName, coursePicture = coursePicture,
             courseIntroduce = courseIntroduce, userId = userId)
+    }
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    fun getId(): Int? {
+        return courseId
     }
 }

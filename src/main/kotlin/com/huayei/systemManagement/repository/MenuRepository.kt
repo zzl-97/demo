@@ -16,7 +16,7 @@ import javax.transaction.Transactional
 
 
 @Repository
-@Transactional
+@org.springframework.transaction.annotation.Transactional(readOnly = true)
 //菜单的数据库操作
 interface MenuRepository : JpaRepository<Menu, Long>, JpaSpecificationExecutor<Menu> {
 
