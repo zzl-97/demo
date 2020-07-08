@@ -1,15 +1,15 @@
 package com.huayei.exam.testQuestions.controller
 
+import com.huayei.exam.testPaper.service.TestPaperService
 import com.huayei.exam.testQuestions.dto.TestQuestionsDto
 import com.huayei.exam.testQuestions.event.TestQuestions
 import com.huayei.exam.testQuestions.repository.TestQuestionsRepository
 import jxl.read.biff.BiffException
+import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.xssf.usermodel.XSSFSheet
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.multipart.MultipartFile
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.net.URLEncoder
 import java.util.*
 import javax.servlet.http.HttpServletResponse
@@ -22,31 +22,24 @@ import javax.servlet.http.HttpServletResponse
  *
  */
 @RestController
+@CrossOrigin // 跨域请求
 @RequestMapping("/testQuestion")
 class TestQuestionsController(
 
-    val testQuestionsRepository: TestQuestionsRepository
+    val testQuestionsRepository: TestQuestionsRepository,
+    val test : TestPaperService
 
 ) {
-    @GetMapping("/hello")
-    fun getHelloworld(@RequestParam("uploadFile")  file : MultipartFile): String {
-       return file.getOriginalFilename()
-       // return "hello world"
-    }
-
 
     // 下载试题模板
     @GetMapping("/download")
     @Throws(FileNotFoundException::class)
     fun downloadLocal(response: HttpServletResponse) { // 下载本地文件
         val fileName = URLEncoder.encode("试题导入模板.xlsx","UTF-8") // 文件的默认保存名
-        // 读到流中
         val inStream: InputStream = FileInputStream("D:\\newFile\\试题导入模板.xlsx") // 文件的存放路径
-        // 设置输出的格式
         response.reset()
         response.contentType = "bin"
         response.addHeader("Content-Disposition", "attachment; filename=\"$fileName\"")
-        // 循环取出流中的数据
         val b = ByteArray(100)
         var len: Int
         try {
@@ -58,23 +51,46 @@ class TestQuestionsController(
     }
 
     //导入excel
+    //修改，传入一个文件路径和courseId课程id
     @GetMapping("/excel")
-    @ResponseBody
     @Throws(IOException::class, BiffException::class)
-    fun excelUser(file: MultipartFile?): String? {
-        val excel = ExcelController("C:\\Users\\12508\\Desktop\\用户表.xls")
-        excel.readExcel()
-        val list: List<*> = excel.outData()
-        val qiestionList: MutableList<TestQuestions> = ArrayList<TestQuestions>()
-        val n = TestQuestions()
-//        for (i in list.indices) {
-//            val str = list[i] as Array<String>
-//            n.setName(str[1])
-//            n.setPassword(str[2])
-//            n.setRoleId(str[3].toInt())
-//            userList.add(n)
-//        }
-        testQuestionsRepository.saveAll(qiestionList)
+    fun excelUser( @RequestParam courseId : Int): String? {
+        val workbook = XSSFWorkbook(FileInputStream(File("C:\\Users\\12508\\Desktop\\试题导入模板.xlsx")))
+        val sheet: XSSFSheet = workbook.getSheetAt(0)
+        val list: MutableList<TestQuestions> = ArrayList<TestQuestions>()
+        for (j in 2 until sheet.getPhysicalNumberOfRows()) {
+            val row: Row = sheet.getRow(j)
+            if (null != row) {
+                val testQuestions = TestQuestions()
+                testQuestions.questionId = null
+                testQuestions.questionName = row.getCell(0).toString()
+                testQuestions.questionType = row.getCell(1).toString()
+                testQuestions.answer = row.getCell(3).toString()
+                if(row.getCell(7)!=null) {
+                    testQuestions.optionA = row.getCell(7).toString()
+                }else {
+                    testQuestions.optionA = null
+                }
+                if(row.getCell(8)!=null) {
+                    testQuestions.optionB = row.getCell(8).toString()
+                }else {
+                    testQuestions.optionB = null
+                }
+                if(row.getCell(9)!=null) {
+                    testQuestions.optionC = row.getCell(9).toString()
+                }else {
+                    testQuestions.optionC = null
+                }
+                if(row.getCell(10)!=null) {
+                    testQuestions.optionD = row.getCell(10).toString()
+                }else {
+                    testQuestions.optionD = null
+                }
+                testQuestions.courseId = courseId
+                list.add(testQuestions)
+            }
+        }
+        testQuestionsRepository.saveAll(list)
         return "saved"
     }
 
@@ -84,6 +100,11 @@ class TestQuestionsController(
         testQuestionsRepository.save(TestQuestions(null, dto.questionName, dto.questionType, dto.answer,
             dto.optionA,dto.optionB, dto.optionC, dto.optionD, dto.courseId))
         return "Saved"
+    }
+
+    @GetMapping("/test")
+    fun test(){
+        test.delPaper(6)
     }
 
     //按照id删除试题
@@ -122,6 +143,7 @@ class TestQuestionsController(
     fun getQuestionByIdAndType(@PathVariable id : Int, @RequestParam type : String): Iterable<TestQuestions> {
         return testQuestionsRepository.findByCourseIdAndQuestionType(id, type)
     }
+
 
 
 }

@@ -12,10 +12,12 @@ data class TestPaper(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var paperId : Int ?= null,//试卷id
 
-    var paperName : String ?= null//试卷名
+    var paperName : String ?= null,//试卷名
+
+    var courseId : Int ?=null//课程id
 
 ) {
     fun dto() : TestPaperDto {
-        return TestPaperDto( paperId = paperId, paperName = paperName )
+        return TestPaperDto( paperId = paperId, paperName = paperName, courseId = courseId )
     }
 }

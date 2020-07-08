@@ -10,33 +10,36 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.annotation.Resource
 import javax.persistence.Id
+
 /**
-*@Description TODO
-*Author zzl@huayei.com
-*Date 2020/7/7 18:19
-*@Since 1.0
-**/
+ *@Description TODO
+ *Author zzl@huayei.com
+ *Date 2020/7/7 18:19
+ *@Since 1.0
+ **/
 
 @RestController
+@CrossOrigin
 class MenuController(
-    @Resource
     var menuService: MenuService,
-    @Resource
-    var menuRoleService: MenuRoleService
+    var menuRoleService: MenuRoleService,
+    val menuRepository: MenuRoleService
 
 ) {
-
-    //根据id查询用户得菜单
+    /**
+     * 根据id查询用户得菜单
+     */
     @PutMapping("/selectMenu.ait/{id}")
     fun selectMenu(@PathVariable id: Long): List<DTOMenu> {
         return menuService.selectMenu(id).map {
-            println(it.menuId);
             it.dto()
         };
 
     }
 
-    //查询顶级菜单
+    /**
+     * 查询顶级菜单
+     */
     @PostMapping("/selectMenuTop")
     fun selectMenuTop(): Optional<DTOMenu>? {
 
@@ -45,7 +48,9 @@ class MenuController(
         }
     }
 
-    //根据父类ID查询字类ID
+    /**
+     * 根据父类ID查询字类ID
+     */
     @PostMapping("/selectMenuUnder/{id}")
     fun selectMenuUnder(@PathVariable id: Long): Optional<DTOMenu>? {
 
@@ -54,16 +59,19 @@ class MenuController(
         }
     }
 
-    //添加菜单
+    /**
+     * 添加菜单
+     */
+
     @PostMapping("/addMenu")
     fun addMenu(@RequestBody menu: Menu): DTOMenu {
         menuService.menuRepository.save(menu);
-        return DTOMenu(
-            message = "添加菜单成功"
-        )
+        return DTOMenu(message = "添加菜单成功")
     }
 
-    //修改菜单
+    /**
+     *  修改菜单
+     */
     @PutMapping()
     fun updateMenu(@PathVariable id: Long, @RequestBody menu: Menu): DTOMenu {
         //根据id查询菜单
@@ -75,13 +83,13 @@ class MenuController(
             it.fid = menu.fid
             menuService.menuRepository.save(it)
         }
-        return DTOMenu(
-            message = "修改成功"
-        )
+        return DTOMenu(message = "修改成功")
     }
 
+    /**
+     * 修改角色的菜单权限
+     */
 
-    //修改角色的菜单权限
     @PutMapping("/authority")
     fun authority(@RequestBody dtoMenuRole: DTOMenuRole): DTOMenuRole {
         //定义一个集合用于批量插入
@@ -91,7 +99,6 @@ class MenuController(
             menuRoleService.delteteRole(it)
         }
         //遍历
-
         for (item in dtoMenuRole.menuIds!!) {
             var menuRole: MenuRole = MenuRole();
             //将Id赋值给menuRole
@@ -101,9 +108,7 @@ class MenuController(
         }
         //执行添加的方法
         menuRoleService.menuRoleRepository.saveAll(list)
-        return DTOMenuRole(
-            message = "修改成功"
-        )
+        return DTOMenuRole(message = "修改成功")
     }
 
 

@@ -33,31 +33,31 @@ class CourseService(
     /**
      * 课程的查询
      */
-    fun selectCourseAll(@RequestBody courseDto: CourseDto):List<Course>{
+    fun selectCourseAll(@RequestBody courseDto: CourseDto): List<Course> {
         val course = courseDto.entity();
-       val  spec : Specification<Course?> =
-           Specification<Course?>{ root: Root<Course?>, query: CriteriaQuery<*>, criteriaBuilder: CriteriaBuilder ->
-               val courseName = root.get<Course>("courseName")
-               val courseIntroduce = root.get<Course>("courseIntroduce")
-               var p1: Predicate? = null
-               if (course.courseName !== "") {
-                   val p2 = criteriaBuilder.equal(courseName, course.courseName)
-                   p1 = if (p1 != null) {
-                       criteriaBuilder.and(p1, p2)
-                   } else {
-                       p2
-                   }
-               }
-               if(course.courseIntroduce != ""){
-                   val p2 = criteriaBuilder.equal(courseIntroduce, course.courseIntroduce)
-                   p1 = if (p1 != null) {
-                       criteriaBuilder.and(p1, p2)
-                   } else {
-                       p2
-                   }
-               }
-               p1!!
-       }
+        val spec: Specification<Course?> =
+            Specification<Course?> { root: Root<Course?>, query: CriteriaQuery<*>, criteriaBuilder: CriteriaBuilder ->
+                val courseName = root.get<Course>("courseName")
+                val courseIntroduce = root.get<Course>("courseIntroduce")
+                var p1: Predicate? = null
+                if (course.courseName !== "") {
+                    val p2 = criteriaBuilder.equal(courseName, course.courseName)
+                    p1 = if (p1 != null) {
+                        criteriaBuilder.and(p1, p2)
+                    } else {
+                        p2
+                    }
+                }
+                if (course.courseIntroduce != "") {
+                    val p2 = criteriaBuilder.equal(courseIntroduce, course.courseIntroduce)
+                    p1 = if (p1 != null) {
+                        criteriaBuilder.and(p1, p2)
+                    } else {
+                        p2
+                    }
+                }
+                p1!!
+            }
         return courseRepository.findAll(spec);
     }
 

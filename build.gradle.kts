@@ -30,7 +30,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-test")
     implementation("com.alibaba:fastjson:1.2.70")
-    implementation("net.sourceforge.jexcelapi:jxl:2.6.12");
+    implementation("net.sourceforge.jexcelapi:jxl:2.6.12")
+    implementation("org.apache.poi:poi-ooxml:4.0.1")
 }
 
 configure<JavaPluginConvention> {

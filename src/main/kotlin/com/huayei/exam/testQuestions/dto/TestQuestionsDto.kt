@@ -1,7 +1,7 @@
 package com.huayei.exam.testQuestions.dto
 
-
 import com.huayei.exam.testQuestions.event.TestQuestions
+import javax.persistence.Column
 
 data class TestQuestionsDto (
 
@@ -13,12 +13,16 @@ data class TestQuestionsDto (
 
     var answer : String ?= null,
 
+    @Column(length = 512)
     var optionA : String ?= null,
 
+    @Column(length = 512)
     var optionB : String ?= null,
 
+    @Column(length = 512)
     var optionC : String ?= null,
 
+    @Column(length = 512)
     var optionD : String ?= null,
 
     var courseId : Int ?=null

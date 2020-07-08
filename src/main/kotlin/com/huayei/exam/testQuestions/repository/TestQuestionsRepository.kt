@@ -19,4 +19,8 @@ interface TestQuestionsRepository : JpaRepository <TestQuestions,Int>, JpaSpecif
     fun findQuestionByCourseId(courseId : Int) : TestQuestions
 
     fun findByCourseIdAndQuestionType(courseId : Int, type : String) : Iterable<TestQuestions>
+
+    fun deleteByCourseId(courseId : Int)
+
+    fun findByCourseId(courseId: Int) : Iterable<TestQuestions>
 }

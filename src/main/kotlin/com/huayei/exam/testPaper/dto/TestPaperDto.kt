@@ -6,10 +6,12 @@ data class TestPaperDto (
 
     var paperId : Int ?= null,
 
-    var paperName : String ?= null
+    var paperName : String ?= null,
+
+    var courseId : Int ?= null
 
 ) {
     fun entity() : TestPaper {
-        return TestPaper( paperId = paperId, paperName = paperName )
+        return TestPaper( paperId = paperId, paperName = paperName, courseId = courseId )
     }
 }
