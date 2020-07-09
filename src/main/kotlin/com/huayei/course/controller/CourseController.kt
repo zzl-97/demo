@@ -1,8 +1,6 @@
 package com.huayei.course.controller
 
-import com.huayei.course.event.CourseUser
 import com.huayei.course.repository.CourseRepository
-import com.huayei.course.repository.CourseUserRepository
 import com.huayei.course.service.ChapterService
 import com.huayei.course.service.CourseService
 import com.huayei.testQuestions.dto.CourseDto
@@ -85,8 +83,8 @@ class CourseController(
         courseRepository.findById(courseId).map {
             courseRepository.deleteById(courseId);
             //查询课程地下是否有章节
-            chapterService.selectChapter(courseId).map {
-                chapterService.chapterRepostitory.delete(it)
+            chapterService.getChaptersOf(courseId).map {
+                chapterService.chapterRepository.delete(it)
             }
         }
         return CourseDto(message = "删除成功")

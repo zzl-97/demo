@@ -1,4 +1,4 @@
-package com.huayei.systemManagement.DTO
+package com.huayei.systemManagement.dto
 
 import com.huayei.systemManagement.entity.User
 import java.sql.Date

@@ -1,6 +1,6 @@
 package com.huayei.systemManagement.entity
 
-import com.huayei.systemManagement.DTO.DTOMenuRole
+import com.huayei.systemManagement.dto.DTOMenuRole
 import javax.persistence.*
 /**
 *@Description TODO
@@ -18,9 +18,7 @@ data class MenuRole(
     //自定义序列开始值
     @SequenceGenerator(name = "initialValue = 100")
     var menuUserId: Long? = null,
-
     var menuId: Long? = null,
-
     var roleId: Long? = null
 
 ) {

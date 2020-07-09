@@ -1,7 +1,6 @@
 package com.huayei.systemManagement.entity
 
-import com.huayei.systemManagement.DTO.DTOMenu
-import com.sun.javafx.beans.IDProperty
+import com.huayei.systemManagement.dto.DTOMenu
 import javax.persistence.*
 /**
 *@Description TODO

@@ -2,6 +2,7 @@ package com.huayei.testQuestions.dto
 
 import com.huayei.testQuestions.event.Course
 import com.sun.istack.NotNull
+import javax.validation.constraints.Size
 
 /**
  * @Description TODO
@@ -14,7 +15,7 @@ data class CourseDto(
 
 
     var courseId: Int? = null,
-
+    @get: Size(max = 256)
     var courseName: String? = null,
 
     var coursePicture: String? = null,

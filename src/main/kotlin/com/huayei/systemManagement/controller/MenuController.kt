@@ -1,15 +1,13 @@
 package com.huayei.systemManagement.controller
 
-import com.huayei.systemManagement.DTO.DTOMenu
-import com.huayei.systemManagement.DTO.DTOMenuRole
+import com.huayei.systemManagement.dto.DTOMenu
+import com.huayei.systemManagement.dto.DTOMenuRole
 import com.huayei.systemManagement.entity.Menu
 import com.huayei.systemManagement.entity.MenuRole
 import com.huayei.systemManagement.service.MenuRoleService
 import com.huayei.systemManagement.service.MenuService
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import javax.annotation.Resource
-import javax.persistence.Id
 
 /**
  *@Description TODO

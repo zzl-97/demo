@@ -1,12 +1,9 @@
 package com.huayei.systemManagement.controller
 
-import com.huayei.systemManagement.DTO.DTOUser
+import com.huayei.systemManagement.dto.DTOUser
 import com.huayei.systemManagement.entity.User
 import com.huayei.systemManagement.service.UserService
-import org.hibernate.sql.Update
-import org.springframework.data.repository.query.Param
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.annotation.Resource
 /**
 *@Description TODO

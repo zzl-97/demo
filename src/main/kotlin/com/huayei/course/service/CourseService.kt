@@ -1,6 +1,5 @@
 package com.huayei.course.service
 
-import com.huayei.course.event.Chapter
 import com.huayei.course.repository.CourseRepository
 import com.huayei.testQuestions.dto.CourseDto
 import com.huayei.testQuestions.event.Course
@@ -18,18 +17,15 @@ import javax.persistence.criteria.Root
  *Date 2020/7/8 9:15
  *@Since 1.0
  **/
-
-
 @Service
 class CourseService(
-
-    var courseRepository: CourseRepository
+    val courseRepository: CourseRepository
 ) {
 
     fun selectCourseName(courseName: String) = courseRepository.findByCourseName(courseName);
 
     fun selectCourse() = courseRepository.findAllBy();
-
+//  courseRepository.findAll()
     /**
      * 课程的查询
      */

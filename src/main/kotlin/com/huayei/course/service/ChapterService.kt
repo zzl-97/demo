@@ -1,12 +1,15 @@
 package com.huayei.course.service
 
-import com.huayei.course.dto.ChapterDto
 import com.huayei.course.event.Chapter
-import com.huayei.course.repository.ChapterRepostitory
+import com.huayei.course.repository.ChapterRepository
+import com.huayei.domain.course.request.ChapterReq
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.RequestBody
 import javax.persistence.criteria.Predicate
+
 
 /**
  *@Description TODO
@@ -14,55 +17,44 @@ import javax.persistence.criteria.Predicate
  *Date 2020/7/8 10:18
  *@Since 1.0
  **/
-
-
 @Service
 class ChapterService(
 
-    var chapterRepostitory: ChapterRepostitory
+    var chapterRepository: ChapterRepository
 ) {
 
-    fun selectChapterName(ChapterNike: String) = chapterRepostitory.findByChapterName(ChapterNike);
+    fun getChapter(chapterName: String) = chapterRepository.findByChapterName(chapterName)
 
     //根据课程ID来查询 章节
-    fun selectChapter(courseId: Int) = chapterRepostitory.findByCourseId(courseId);
+    fun getChaptersOf(courseId: Int) = chapterRepository.findByCourseId(courseId)
 
     /**
-     * 添加章节
+     * 添加章节  // 新增、修改、删除时需要对部分参数进行验证
      *  @param
      */
-    fun addChapter(chapter: Chapter) = chapterRepostitory.save(chapter);
+    fun addChapter(chapter: Chapter) = chapterRepository.save(chapter)
 
     /**
-     * 查询章节
+     * 动态查询章节信息
+     * @param form 查询信息
      */
-    fun selectChapterAll(@RequestBody chapterDto: ChapterDto): List<Chapter> {
-        val chapter = chapterDto.entity();
-        val spec: Specification<Chapter?> =
-            Specification<Chapter?> { root, query, criteriaBuilder -> //获取数据库字段
-                val chapterName = root.get<Chapter>("chapterName")
-                val courseId = root.get<Chapter>("courseId")
-                //构造查询 第一个参数 path属性参数  第二个 就是取值
-                var p1: Predicate? = null
-                //将查询条件组合在一起()
-                if (chapter.chapterName !== "") {
-                    val p2 = criteriaBuilder.equal(chapterName, chapter.chapterName)
-                    p1 = if (p1 != null) {
-                        criteriaBuilder.and(p1, p2)
-                    } else {
-                        p2
-                    }
-                }
-                if (chapter.courseId !== "") {
-                    val p2 = criteriaBuilder.equal(courseId, chapter.courseId)
-                    p1 = if (p1 != null) {
-                        criteriaBuilder.and(p1, p2)
-                    } else {
-                        p2
-                    }
-                }
-                p1!!
+    fun getChapters(form: ChapterReq): Page<Chapter> {
+        val pageable: Pageable = PageRequest.of(0, 10)
+        return chapterRepository.findAll(this.getSpec(form), pageable)
+    }
+
+    private fun getSpec(form: ChapterReq): Specification<Chapter> {
+        return Specification { root, query, cb ->
+            val list = ArrayList<Predicate>()
+            if (!form.name.isNullOrBlank()) {
+                list.add(cb.equal(root.get<String>("chapterName"), form.name))
             }
-        return chapterRepostitory.findAll(spec)
+            // !=   <>
+            form.courseId?.let {
+                list.add(cb.equal(root.get<String>("courseId"), form.courseId))
+            }
+            val p = arrayOfNulls<Predicate>(list.size)
+            cb.and(*list.toArray(p))
+        }
     }
 }

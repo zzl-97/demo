@@ -11,7 +11,7 @@ import javax.persistence.*
 
 //用户与课程的关系表
 @Entity
-@Table(name = "t_courseUser")
+@Table(name = "t_course_user")
 data class CourseUser(
 
     @Id

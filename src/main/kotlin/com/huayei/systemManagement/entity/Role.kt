@@ -1,6 +1,6 @@
 package com.huayei.systemManagement.entity
 
-import com.huayei.systemManagement.DTO.DTORole
+import com.huayei.systemManagement.dto.DTORole
 import javax.persistence.*
 /**
 *@Description TODO

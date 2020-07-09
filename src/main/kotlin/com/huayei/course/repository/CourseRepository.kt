@@ -19,8 +19,15 @@ import org.springframework.transaction.annotation.Transactional
 interface CourseRepository : JpaRepository<Course, Int>, JpaSpecificationExecutor<Course> {
 
     //根据名字来查询课程是否存在
-    fun findByCourseName(CourseName: String?):Course?;
+    fun findByCourseName(CourseName: String?): Course?
+
+    /**
+     * 根据课程名称判断课程是否存在
+     * @param name 课程名称
+     * @return true-存在 否则 false
+     */
+    fun existsByCourseName(name: String): Boolean
 
     //查询所有的课程 添加章节用
-    fun findAllBy():List<Course>;
+    fun findAllBy(): List<Course>
 }

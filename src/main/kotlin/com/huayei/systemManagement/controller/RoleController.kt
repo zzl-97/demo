@@ -1,10 +1,9 @@
 package com.huayei.systemManagement.controller
 
-import com.huayei.systemManagement.DTO.DTORole
+import com.huayei.systemManagement.dto.DTORole
 import com.huayei.systemManagement.entity.Role
 import com.huayei.systemManagement.service.RoleService
 import org.springframework.web.bind.annotation.*
-import javax.persistence.Id
 
 /**
 *@Description TODO

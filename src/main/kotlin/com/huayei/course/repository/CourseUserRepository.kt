@@ -7,5 +7,4 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional(readOnly = true)
-interface CourseUserRepository :JpaRepository<CourseUser,Int>{
-}
+interface CourseUserRepository : JpaRepository<CourseUser, Int>

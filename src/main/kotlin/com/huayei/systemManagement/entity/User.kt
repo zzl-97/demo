@@ -1,7 +1,7 @@
 package com.huayei.systemManagement.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import com.huayei.systemManagement.DTO.DTOUser
+import com.huayei.systemManagement.dto.DTOUser
 import org.springframework.data.annotation.CreatedDate
 
 import java.sql.Date
@@ -30,7 +30,6 @@ data class User(
     @CreatedDate
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")//设置添加得格式
     var resTime: Date? = null, //注册时间
-
     var type: Int? = null, //类型  0 学生 1老师
     var STATE: Int? = null,//状态  0禁用 1 启用  2删除
     var roleId: Int? = null//角色Id
