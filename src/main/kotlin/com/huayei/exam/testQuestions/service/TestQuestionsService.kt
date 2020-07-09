@@ -17,7 +17,7 @@ class TestQuestionsService(
 
 ) {
     //删除试题
-    fun delQuestion(id : Int) = testQuestionsRepository.findByCourseId(id).map {
-        testQuestionsRepository.deleteByCourseId(id)
+    fun delQuestion(courseId : Int) = testQuestionsRepository.findByCourseId(courseId).map {
+        testQuestionsRepository.deleteByCourseId(courseId)
     }
 }

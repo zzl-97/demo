@@ -36,9 +36,9 @@ class TestQuestionsController(
     @Throws(FileNotFoundException::class)
     fun downloadLocal(response: HttpServletResponse) { // 下载本地文件
         val fileName = URLEncoder.encode("试题导入模板.xlsx","UTF-8") // 文件的默认保存名
-        val inStream: InputStream = FileInputStream("D:\\newFile\\试题导入模板.xlsx") // 文件的存放路径
+        val inStream: InputStream = FileInputStream("D:\\newFile\\试题导入模板.xlsx") // 文件模板的存放路径
         response.reset()
-        response.contentType = "bin"
+        response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         response.addHeader("Content-Disposition", "attachment; filename=\"$fileName\"")
         val b = ByteArray(100)
         var len: Int
@@ -100,11 +100,6 @@ class TestQuestionsController(
         testQuestionsRepository.save(TestQuestions(null, dto.questionName, dto.questionType, dto.answer,
             dto.optionA,dto.optionB, dto.optionC, dto.optionD, dto.courseId))
         return "Saved"
-    }
-
-    @GetMapping("/test")
-    fun test(){
-        test.delPaper(6)
     }
 
     //按照id删除试题

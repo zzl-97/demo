@@ -25,7 +25,7 @@ data class TestQuestions(
 
     var optionD : String ?= null,// 选项D
 
-    var courseId: Int? = null// 课程id
+    var courseId: Int ?= null// 课程id
 
 ) {
     fun dto() : TestQuestionsDto {
