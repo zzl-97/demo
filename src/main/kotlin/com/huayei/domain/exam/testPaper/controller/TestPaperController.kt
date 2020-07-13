@@ -3,6 +3,7 @@ package com.huayei.exam.testPaper.controller
 import com.huayei.base.BaseResp
 import com.huayei.exam.testPaper.event.TestPaperQuestion
 import com.huayei.exam.testPaper.repository.TestPaperQuestionRepository
+import com.huayei.exam.testQuestions.dto.TestPaperDto
 import com.huayei.exam.testQuestions.event.TestPaper
 import com.huayei.exam.testQuestions.repository.TestPaperRepository
 import org.springframework.web.bind.annotation.*
@@ -38,10 +39,15 @@ class TestPaperController (
         return BaseResp(data = "删除成功！")
     }
 
+    /**
+     * 填写试卷名，添加试题，发布考试
+     * @param testPaperDto 试题dto(填写试题名和课程id)
+     * @return
+     */
     //选择课程，显示试题，选择试题，填写试卷名，发布考试
     @PostMapping("/add")
-    fun add(@RequestParam paperName: String, @RequestParam courseId: Int, @RequestParam questionIdList: ArrayList<Long>){
-        testPaperRepository.save(TestPaper(null,paperName,courseId)).let {
+    fun add(@RequestBody testPaperDto : TestPaperDto , @RequestParam questionIdList: ArrayList<Long>){
+        testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId)).let {
             val list = ArrayList<TestPaperQuestion>()
             val t = TestPaperQuestion()
             for (i in 0 until questionIdList.size){

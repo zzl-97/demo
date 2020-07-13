@@ -1,4 +1,4 @@
-package com.huayei.systemManagement.service
+package com.huayei.domain.systemManagement.service
 
 import com.huayei.exam.testQuestions.event.TestQuestions
 import com.huayei.exam.testQuestions.repository.TestQuestionsRepository
