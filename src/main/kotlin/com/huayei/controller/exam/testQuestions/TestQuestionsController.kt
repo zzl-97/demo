@@ -9,6 +9,7 @@ import jxl.read.biff.BiffException
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.io.*
 import java.net.URLEncoder
@@ -188,7 +189,7 @@ class TestQuestionsController(
     @PostMapping("/findByCourseId/{id}")
     fun getQuestionByCourseId(@PathVariable id: Int): BaseResp {
         return BaseResp(data = testQuestionsRepository.findByCourseId(id))
-        }
+    }
 
     /**
      * 根据课程id和题型查询试题
