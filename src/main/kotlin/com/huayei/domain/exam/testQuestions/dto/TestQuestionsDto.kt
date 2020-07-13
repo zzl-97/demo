@@ -34,7 +34,12 @@ data class TestQuestionsDto (
 
 ) {
     fun entity(): TestQuestions {
-        return TestQuestions( questionName = questionName, questionType = questionType, answer = answer,
-            optionA = optionA, optionB = optionB, optionC = optionC, optionD = optionD )
+        return TestQuestions(questionName = questionName,
+            questionType = questionType,
+            answer = answer,
+            optionA = optionA,
+            optionB = optionB,
+            optionC = optionC,
+            optionD = optionD )
     }
 }

@@ -6,16 +6,18 @@ import javax.persistence.Column
 data class TestPaperDto (
 
     @Column(nullable = false,length = 64)
-    var paperId : Long ?= null,
+    var paperId: Long? = null,
 
     @Column(nullable = false,length = 64)
-    var paperName : String ?= null,
+    var paperName: String? = null,
 
     @Column(length = 64)
-    var courseId : Int ?= null
+    var courseId: Int? = null
 
 ) {
-    fun entity() : TestPaper {
-        return TestPaper( paperId = paperId, paperName = paperName, courseId = courseId )
+    fun entity(): TestPaper {
+        return TestPaper(paperId = paperId,
+            paperName = paperName,
+            courseId = courseId )
     }
 }

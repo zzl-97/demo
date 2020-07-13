@@ -1,6 +1,7 @@
 package com.huayei.exam.testQuestions.repository
 
 
+import com.huayei.exam.testQuestions.dto.TestQuestionsDto
 import com.huayei.exam.testQuestions.event.TestQuestions
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
@@ -15,12 +16,9 @@ interface TestQuestionsRepository : JpaRepository <TestQuestions,Long>, JpaSpeci
 
     fun existsByQuestionName(courseName: String): Boolean
 
-    @Query(value = "select a from TestQuestions a left join Course b on a.courseId = b.courseId where b.courseId=?1")
-    fun findQuestionByCourseId(courseId: Int): TestQuestions
-
-    fun findByCourseIdAndQuestionType(courseId: Int, type: String): List<TestQuestions>
+    fun findByCourseIdAndQuestionType(courseId: Int, type: String): List<TestQuestionsDto>
 
     fun deleteByCourseId(courseId: Int)
 
-    fun findByCourseId(courseId: Int): Iterable<TestQuestions>
+    fun findByCourseId(courseId: Int): List<TestQuestionsDto>
 }

@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 @Transactional(readOnly = true)
 interface TestPaperRepository : JpaRepository <TestPaper,Long>, JpaSpecificationExecutor <TestPaper>   {
 
-    fun findByCourseId(courseId : Int) : List<TestPaper>
+    fun findByCourseId(courseId: Int): List<TestPaper>
 
-    fun deleteByCourseId(courseId : Int)
+    fun deleteByCourseId(courseId: Int)
 
 }

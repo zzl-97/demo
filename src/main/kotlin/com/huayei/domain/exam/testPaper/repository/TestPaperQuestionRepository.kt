@@ -7,10 +7,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
 @Repository
-@Transactional(readOnly = true)
 interface TestPaperQuestionRepository : JpaRepository<TestPaperQuestion, Long>, JpaSpecificationExecutor<TestPaperQuestion> {
 
-    fun deleteByPaperId(paperId : Long)
-
-    fun findByPaperId(paperId: Long) : List<TestPaperQuestion>
+    fun deleteByPaperId(paperId: Long)
 }

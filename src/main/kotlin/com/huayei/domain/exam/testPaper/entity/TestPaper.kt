@@ -17,14 +17,16 @@ data class TestPaper(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var paperId : Long ?= null,//试卷id
+    var paperId: Long? = null,//试卷id
 
-    var paperName : String ?= null,//试卷名
+    var paperName: String? = null,//试卷名
 
-    var courseId : Int ?=null//课程id
+    var courseId: Int? =null//课程id
 
 ) {
-    fun dto() : TestPaperDto {
-        return TestPaperDto( paperId = paperId, paperName = paperName, courseId = courseId )
+    fun dto(): TestPaperDto {
+        return TestPaperDto(paperId = paperId,
+            paperName = paperName,
+            courseId = courseId )
     }
 }

@@ -14,10 +14,9 @@ import javax.persistence.*
 data class TestPaperQuestion(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var paperQuestionId : Long? = null,
+    var paperQuestionId: Long? = null,
 
-    var paperId : Long? = null,
+    var paperId: Long? = null,
 
-    var questionId : Long? =null
-) {
-}
+    var questionId: Long? =null
+)

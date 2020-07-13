@@ -36,7 +36,14 @@ data class TestQuestions(
 
 ) {
     fun dto(): TestQuestionsDto {
-        return TestQuestionsDto( questionId = questionId, questionName = questionName, questionType = questionType,
-            answer = answer, optionA = optionA, optionB = optionB, optionC = optionC, optionD = optionD, courseId = courseId)
+        return TestQuestionsDto(questionId = questionId,
+            questionName = questionName,
+            questionType = questionType,
+            answer = answer,
+            optionA = optionA,
+            optionB = optionB,
+            optionC = optionC,
+            optionD = optionD,
+            courseId = courseId)
     }
 }
