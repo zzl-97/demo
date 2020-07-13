@@ -22,12 +22,15 @@ data class TestPaper(
 
     var paperName: String? = null,//试卷名
 
-    var courseId: Int? =null//课程id
+    var courseId: Int? =null,//课程id
+
+    var paperState: Int? =0//考试状态0-启用，1-禁用
 
 ) {
     fun dto(): TestPaperDto {
         return TestPaperDto(paperId = paperId,
             paperName = paperName,
-            courseId = courseId )
+            courseId = courseId,
+            paperState = paperState)
     }
 }

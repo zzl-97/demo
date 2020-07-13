@@ -1,7 +1,6 @@
 package com.huayei.exam.testQuestions.dto
 
 import com.huayei.exam.testQuestions.event.TestPaper
-import javax.persistence.Column
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
@@ -17,12 +16,15 @@ data class TestPaperDto (
 
     @NotBlank
     @get: Size(max = 64)
-    var courseId: Int? = null
+    var courseId: Int? = null,
 
+    @NotNull
+    var paperState: Int? =0
 ) {
     fun entity(): TestPaper {
         return TestPaper(paperId = paperId,
             paperName = paperName,
-            courseId = courseId )
+            courseId = courseId,
+            paperState = paperState)
     }
 }
