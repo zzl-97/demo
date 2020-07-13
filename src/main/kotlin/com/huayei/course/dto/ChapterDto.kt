@@ -1,7 +1,6 @@
 package com.huayei.course.dto
 
-import com.huayei.course.event.Chapter
-import org.apache.commons.math3.analysis.function.Max
+import com.huayei.course.entity.Chapter
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
@@ -13,10 +12,10 @@ import javax.validation.constraints.Size
  **/
 data class ChapterDto(
 
-    @get: NotNull
+//    @get: NotNull
     var chapterId: Int? = null, //章节ID
 
-    @get: Size(max = 256)
+//    @get: Size(max = 256)
 //    @get: Length
     var chapterName: String? = null,//章节名
 

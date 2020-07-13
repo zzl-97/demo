@@ -1,8 +1,8 @@
 package com.huayei.exam.testPaper.controller
 
+import com.huayei.base.BaseResp
 import com.huayei.exam.testPaper.event.TestPaperQuestion
 import com.huayei.exam.testPaper.repository.TestPaperQuestionRepository
-import com.huayei.exam.testQuestions.dto.TestPaperDto
 import com.huayei.exam.testQuestions.event.TestPaper
 import com.huayei.exam.testQuestions.repository.TestPaperRepository
 import org.springframework.web.bind.annotation.*
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*
 * @Since 1.0
 *
 */
-
 @RestController
 @CrossOrigin // 跨域请求
 @RequestMapping("/testPaper")
@@ -23,21 +22,25 @@ class TestPaperController (
     val testPaperQuestionRepository: TestPaperQuestionRepository
 ){
 
-    //试卷的删除
+    /**
+     * 试卷的删除
+     * @param id 试卷ID
+     * @return “删除成功！”
+     */
     @DeleteMapping("/del/{id}")
-    fun delPaper(@PathVariable id: Int): String {
+    fun delPaper(@PathVariable id: Long): BaseResp {
         testPaperRepository.findById(id).map {
             testPaperRepository.deleteById(id)
         }
         testPaperQuestionRepository.findById(id).map {
             testPaperQuestionRepository.deleteById(id)
         }
-        return "删除成功！"
+        return BaseResp(data = "删除成功！")
     }
 
     //选择课程，显示试题，选择试题，填写试卷名，发布考试
     @PostMapping("/add")
-    fun add(@RequestParam paperName : String, @RequestParam courseId : Int, @RequestParam questionIdList: ArrayList<Int>){
+    fun add(@RequestParam paperName: String, @RequestParam courseId: Int, @RequestParam questionIdList: ArrayList<Long>){
         testPaperRepository.save(TestPaper(null,paperName,courseId)).let {
             val list = ArrayList<TestPaperQuestion>()
             val t = TestPaperQuestion()

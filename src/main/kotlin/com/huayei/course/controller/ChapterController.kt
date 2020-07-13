@@ -2,11 +2,9 @@ package com.huayei.course.controller
 
 import com.huayei.base.PageResp
 import com.huayei.course.dto.ChapterDto
-import com.huayei.course.event.Chapter
 import com.huayei.course.repository.ChapterRepository
 import com.huayei.course.service.ChapterService
 import com.huayei.domain.course.request.ChapterReq
-import org.springframework.data.domain.Page
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 

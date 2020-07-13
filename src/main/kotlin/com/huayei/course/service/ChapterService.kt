@@ -1,6 +1,6 @@
 package com.huayei.course.service
 
-import com.huayei.course.event.Chapter
+import com.huayei.course.entity.Chapter
 import com.huayei.course.repository.ChapterRepository
 import com.huayei.domain.course.request.ChapterReq
 import org.springframework.data.domain.Page

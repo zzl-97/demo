@@ -1,10 +1,7 @@
 package com.huayei.course.controller;
 
-import com.huayei.course.event.Chapter;
 import com.huayei.course.repository.ChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
 
 /**
  * @Author Administrator

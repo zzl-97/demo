@@ -1,10 +1,9 @@
 package com.huayei.course.controller
 
 import com.huayei.course.dto.WordDto
-import com.huayei.course.event.Word
+import com.huayei.course.entity.Word
 import com.huayei.course.repository.WordRepository
 import org.springframework.web.bind.annotation.*
-import sun.plugin2.message.Message
 
 /**
  *@Description TODO

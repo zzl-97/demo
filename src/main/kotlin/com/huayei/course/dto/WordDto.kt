@@ -1,6 +1,6 @@
 package com.huayei.course.dto
 
-import com.huayei.course.event.Word
+import com.huayei.course.entity.Word
 import java.util.*
 
 data class WordDto(
@@ -11,7 +11,7 @@ data class WordDto(
 
     var wordContent: String? = null, //作业内容
 
-    var wordTime: String? = null, //作业时间
+    var wordTime: Date? = null, //作业时间
 
     var chapterId: Int? = null, //章节ID
 

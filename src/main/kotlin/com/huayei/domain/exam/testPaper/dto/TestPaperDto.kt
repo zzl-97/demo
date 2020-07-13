@@ -6,7 +6,7 @@ import javax.persistence.Column
 data class TestPaperDto (
 
     @Column(nullable = false,length = 64)
-    var paperId : Int ?= null,
+    var paperId : Long ?= null,
 
     @Column(nullable = false,length = 64)
     var paperName : String ?= null,

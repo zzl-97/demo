@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional(readOnly = true)
-interface TestPaperQuestionRepository : JpaRepository<TestPaperQuestion, Int>, JpaSpecificationExecutor<TestPaperQuestion> {
+interface TestPaperQuestionRepository : JpaRepository<TestPaperQuestion, Long>, JpaSpecificationExecutor<TestPaperQuestion> {
 
-    fun deleteByPaperId(paperId : Int)
+    fun deleteByPaperId(paperId : Long)
 
-    fun findByPaperId(paperId: Int) : List<TestPaperQuestion>
+    fun findByPaperId(paperId: Long) : List<TestPaperQuestion>
 }

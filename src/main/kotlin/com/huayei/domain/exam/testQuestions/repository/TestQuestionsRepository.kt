@@ -7,20 +7,20 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.data.jpa.repository.Query
+import java.util.*
 
 @Repository
 @Transactional(readOnly = true)
-interface TestQuestionsRepository : JpaRepository <TestQuestions,Int>, JpaSpecificationExecutor <TestQuestions>   {
+interface TestQuestionsRepository : JpaRepository <TestQuestions,Long>, JpaSpecificationExecutor <TestQuestions>   {
 
-    @Query(value = "select a from TestQuestions a left join Course b on a.courseId = b.courseId where b.courseName=?1")
-    fun findQuestionByCourseName(courseName : String) : TestQuestions
+    fun existsByQuestionName(courseName: String): Boolean
 
     @Query(value = "select a from TestQuestions a left join Course b on a.courseId = b.courseId where b.courseId=?1")
-    fun findQuestionByCourseId(courseId : Int) : TestQuestions
+    fun findQuestionByCourseId(courseId: Int): TestQuestions
 
-    fun findByCourseIdAndQuestionType(courseId : Int, type : String) : Iterable<TestQuestions>
+    fun findByCourseIdAndQuestionType(courseId: Int, type: String): List<TestQuestions>
 
-    fun deleteByCourseId(courseId : Int)
+    fun deleteByCourseId(courseId: Int)
 
-    fun findByCourseId(courseId: Int) : Iterable<TestQuestions>
+    fun findByCourseId(courseId: Int): Iterable<TestQuestions>
 }

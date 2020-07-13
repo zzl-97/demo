@@ -1,6 +1,6 @@
 package com.huayei.course.repository
 
-import com.huayei.course.event.Chapter
+import com.huayei.course.entity.Chapter
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
