@@ -16,6 +16,10 @@ import org.springframework.stereotype.Repository
 @org.springframework.transaction.annotation.Transactional(readOnly = true)
 interface MenuRoleRepository : JpaRepository<MenuRole, Long>, JpaSpecificationExecutor<MenuRole> {
 
+    /**
+     * 根据角色Id删除角色
+     * @param roleId 角色ID
+     */
     //根据roleID删除
     fun deleteByRoleId(roleId: Long?);
 }

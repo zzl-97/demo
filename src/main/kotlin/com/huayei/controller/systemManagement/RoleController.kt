@@ -1,64 +1,62 @@
 package com.huayei.controller.systemManagement
 
+import com.huayei.base.BaseResp
 import com.huayei.domain.systemManagement.dto.DTORole
 import com.huayei.domain.systemManagement.entity.Role
+import com.huayei.domain.systemManagement.repository.RoleRepository
 import com.huayei.domain.systemManagement.service.RoleService
 import org.springframework.web.bind.annotation.*
 
 /**
-*@Description TODO
-*Author zzl@huayei.com
-*Date 2020/7/7 18:18
-*@Since 1.0
-**/
-
-
+ *@Description TODO
+ *Author zzl@huayei.com
+ *Date 2020/7/7 18:18
+ *@Since 1.0
+ **/
 @RestController
-class RoleController(
+@CrossOrigin
+class RoleController(val roleService: RoleService, val roleRepository: RoleRepository) {
 
-    var roleService: RoleService
-) {
-
-    //查询角色
-    @PostMapping("/selectRoleAll")
-    fun selectRole(): List<Role> {
-
-        return roleService.roleRepository.findAll();
+    /**
+     * 查询所有角色
+     */
+    @PostMapping("/getRoleAll")
+    fun getRole(): BaseResp {
+        return BaseResp(data = roleRepository.findAll());
     }
 
-    //新增角色
+    /**
+     * 新增角色
+     * @param role 角色对象
+     */
     @PostMapping("/addRole")
-    fun addRole(@RequestBody role: Role): DTORole {
+    fun addRole(@RequestBody role: DTORole): BaseResp {
         if (role.roleName.equals("")) {
-            return DTORole(
-                message = "输入有效角色名"
-            )
+            return BaseResp(message = "输入有效角色名")
         }
-        roleService.roleRepository.save(role);
-        return DTORole(
-            roleName = role.roleName,
-            message = "新增成功"
-        )
+        roleService.roleRepository.save(role.entity());
+        return BaseResp(message = "新增成功")
     }
 
-    //修改角色
+
+    /**
+     * 修改角色信息
+     * @param id 角色Id
+     */
     @PutMapping("/updateRole/{id}")
-    fun updateRole(@PathVariable id: Long, @RequestBody role: Role): DTORole {
+    fun updateRole(@PathVariable id: Long, @RequestBody role: Role): BaseResp {
         roleService.roleRepository.findById(id).map {
             it.roleName = role.roleName
             roleService.roleRepository.save(it)
-        }
+        }.orElse(return BaseResp(message = "修改失败"))
 
-        return DTORole(
-            message = "修改成功"
-        )
+        return BaseResp(message = "修改成功")
     }
 
 
     //删除角色
     @DeleteMapping("/deleteRole")
-    fun delete():DTORole{
-
+    fun delete(): DTORole {
         return DTORole()
     }
 

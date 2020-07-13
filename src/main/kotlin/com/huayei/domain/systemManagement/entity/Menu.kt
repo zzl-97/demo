@@ -23,9 +23,10 @@ data class Menu(
     var menuState: Int? = null,
     var fid: Int? = null
 ) {
-
+    /**
+     * 实体转DTO
+     */
     fun dto():DTOMenu{
-
         return DTOMenu(
             menuId =  menuId,
             menuName = menuName

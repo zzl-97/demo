@@ -18,7 +18,11 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 interface UserRepository :JpaRepository<User,Long>, JpaSpecificationExecutor<User> {
 
-    //登陆查询用户存不存在
+    /**
+     * 登入查询
+     * @param userName 用户名，password 密码
+     * return User对象
+     */
     fun findByUserNameAndPassword(userName: String?, password: String?):User
 
 

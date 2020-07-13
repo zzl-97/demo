@@ -34,9 +34,10 @@ data class User(
     var STATE: Int? = null,//状态  0禁用 1 启用  2删除
     var roleId: Int? = null//角色Id
 ) {
-    //实体转dto
+    /**
+     * 实体转DTO
+     */
     fun dto():DTOUser{
-
         return DTOUser(
             userId = userId,
             userName = userName,

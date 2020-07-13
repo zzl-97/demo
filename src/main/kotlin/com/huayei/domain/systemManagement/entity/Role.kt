@@ -21,9 +21,10 @@ data class Role(
     var roleId: Long? = null,
     var roleName: String? = null
 ) {
-
+    /**
+     * 实体转DTO
+     */
     fun dto():DTORole{
-
         return  DTORole(
            roleId = roleId,
             roleName = roleName

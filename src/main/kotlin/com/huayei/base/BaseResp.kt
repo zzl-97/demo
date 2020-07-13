@@ -9,9 +9,9 @@ package com.huayei.base
 */
 data class BaseResp (
 
-    var status: Int = 0,
+    var status: Int = 0, //状态 0成功》1失败
 
-    var message: String = "OK",
+    var message: String = "OK", //信息
 
-    var data: Any? = null
+    var data: Any? = null //对象
 )

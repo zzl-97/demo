@@ -11,10 +11,6 @@ import org.springframework.stereotype.Repository
 *Date 2020/7/7 18:19
 *@Since 1.0
 **/
-
 @Repository
 @org.springframework.transaction.annotation.Transactional(readOnly = true)
-interface RoleRepository :JpaRepository<Role,Long>,JpaSpecificationExecutor<Role>{
-
-
-}
+interface RoleRepository :JpaRepository<Role,Long>,JpaSpecificationExecutor<Role>{}

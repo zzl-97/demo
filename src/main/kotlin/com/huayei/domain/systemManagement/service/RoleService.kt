@@ -8,12 +8,5 @@ import org.springframework.stereotype.Service
 *Date 2020/7/7 18:19
 *@Since 1.0
 **/
-
-
 @Service
-class RoleService (
-
-    var roleRepository: RoleRepository
-){
-
-}
+class RoleService (var roleRepository: RoleRepository){}

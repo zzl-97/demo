@@ -22,9 +22,10 @@ data class MenuRole(
     var roleId: Long? = null
 
 ) {
-
+    /**
+     * 实体转DTO
+     */
     fun dto():DTOMenuRole{
-
         return DTOMenuRole(
             menuId = menuId,
             roleId = roleId

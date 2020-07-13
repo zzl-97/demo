@@ -18,7 +18,7 @@ class MenuRoleService(
     var menuRoleRepository: MenuRoleRepository
 ) {
 
-    fun delteteRole(roleId :Long) = menuRoleRepository.deleteByRoleId(roleId)
+    fun deleteRole(roleId :Long) = menuRoleRepository.deleteByRoleId(roleId)
 
 
 }

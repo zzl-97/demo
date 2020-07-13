@@ -19,6 +19,11 @@ import org.springframework.stereotype.Repository
 //菜单的数据库操作
 interface MenuRepository : JpaRepository<Menu, Long>, JpaSpecificationExecutor<Menu> {
 
+    /**
+     * 根据用户Id查询菜单
+     * @param userId 用户菜单
+     * return 菜单集合
+     */
     @Query( value = "select b from MenuRole a left join Menu b on a.menuId = b.menuId left join Role c on " +
                 " c.roleId = a.roleId left join User d on c.roleId = d.roleId where d.userId = ?1")
     fun selectMenu(userId: Long?): List<Menu>
