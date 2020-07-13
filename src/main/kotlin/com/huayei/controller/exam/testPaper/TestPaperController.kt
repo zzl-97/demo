@@ -6,6 +6,7 @@ import com.huayei.exam.testPaper.repository.TestPaperQuestionRepository
 import com.huayei.exam.testQuestions.dto.TestPaperDto
 import com.huayei.exam.testQuestions.event.TestPaper
 import com.huayei.exam.testQuestions.repository.TestPaperRepository
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -28,15 +29,16 @@ class TestPaperController (
      * @param id 试卷ID
      * @return “删除成功！”
      */
+    @Transactional(readOnly = false)
     @DeleteMapping("/del/{id}")
     fun delPaper(@PathVariable id: Long): BaseResp {
-        testPaperRepository.findById(id).map {
+        return testPaperRepository.findById(id).map {
             testPaperRepository.deleteById(id)
-        }
-        testPaperQuestionRepository.findById(id).map {
-            testPaperQuestionRepository.deleteById(id)
-        }
-        return BaseResp(data = "删除成功！")
+            testPaperQuestionRepository.findById(id).map {
+                testPaperQuestionRepository.deleteById(id)
+            }
+            BaseResp(data = "删除成功！")
+        }.orElse(BaseResp(data = "删除失败！"))
     }
 
     /**
@@ -44,6 +46,7 @@ class TestPaperController (
      * @param testPaperDto 试题dto(填写试题名和课程id)
      * @return
      */
+    @Transactional(readOnly = false)
     @PostMapping("/add")
     fun add(@RequestBody testPaperDto : TestPaperDto , @RequestParam questionIdList: ArrayList<Long>){
         testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId)).let {

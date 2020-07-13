@@ -137,11 +137,12 @@ class TestQuestionsController(
     @DeleteMapping("/deleteById/{id}")
     fun delQuestion(@PathVariable id: Long): BaseResp {
         //查询该试卷id是否存在
-        testQuestionsRepository.findById(id).map {
+        return testQuestionsRepository.findById(id).map {
             //存在才删除
             testQuestionsRepository.deleteById(id)
-        }
-        return BaseResp(message = "删除成功。")
+            BaseResp(status = 0,message = "删除成功。")
+        }.orElse(BaseResp(status = 1,message = "删除失败。"))
+
     }
 
     /**
@@ -158,7 +159,7 @@ class TestQuestionsController(
      * 修改一道试题
      * @param id 试题id
      * @param question 试卷信息
-     * @return 返回“修改成功”信息和修改后试题的信息
+     * @return 修改成功-返回修改后的试题信息，修改失败-返回“修改失败”
      */
     @PutMapping("/update/{id}")
     fun update(
@@ -166,7 +167,7 @@ class TestQuestionsController(
         @RequestBody question: TestQuestionsDto,
         request: HttpServletRequest
     ): BaseResp {
-        questionsService.getQuestion(id).map { existingQuestion ->
+        return questionsService.getQuestion(id).map { existingQuestion ->
             existingQuestion.questionName = question.questionName
             existingQuestion.questionType = question.questionType
             existingQuestion.answer = question.answer
@@ -175,8 +176,8 @@ class TestQuestionsController(
             existingQuestion.optionC = question.optionC
             existingQuestion.optionD = question.optionD
             testQuestionsRepository.save(existingQuestion)
-        }
-        return BaseResp(message = "修改成功。",data = questionsService.getQuestion(id))
+            BaseResp(status = 0,message = "修改成功。",data = questionsService.getQuestion(id))
+        }.orElse(BaseResp(status = 1,message = "修改失败。"))
     }
 
     /**
@@ -186,7 +187,7 @@ class TestQuestionsController(
      */
     @PostMapping("/findByCourseId/{id}")
     fun getQuestionByCourseId(@PathVariable id: Int): BaseResp {
-        return BaseResp(data = testQuestionsRepository.findQuestionByCourseId(id).dto())
+        return BaseResp(data = testQuestionsRepository.findByCourseId(id))
         }
 
     /**
