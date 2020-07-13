@@ -1,4 +1,4 @@
-package com.huayei.domain.systemManagement.controller
+package com.huayei.controller.systemManagement
 
 import com.huayei.domain.systemManagement.dto.DTOMenu
 import com.huayei.domain.systemManagement.dto.DTOMenuRole

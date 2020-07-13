@@ -1,4 +1,4 @@
-package com.huayei.domain.exam.testQuestions.controller
+package com.huayei.controller.exam.testQuestions
 
 import com.huayei.base.BaseResp
 import com.huayei.exam.testQuestions.dto.TestQuestionsDto

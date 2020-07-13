@@ -1,4 +1,4 @@
-package com.huayei.domain.course.controller
+package com.huayei.controller.course
 
 import com.huayei.base.PageResp
 import com.huayei.domain.course.dto.ChapterDto

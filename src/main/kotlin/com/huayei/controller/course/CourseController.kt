@@ -1,4 +1,4 @@
-package com.huayei.domain.course.controller
+package com.huayei.controller.course
 
 import com.huayei.domain.course.repository.CourseRepository
 import com.huayei.domain.course.service.ChapterService

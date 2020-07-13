@@ -44,7 +44,6 @@ class TestPaperController (
      * @param testPaperDto 试题dto(填写试题名和课程id)
      * @return
      */
-    //选择课程，显示试题，选择试题，填写试卷名，发布考试
     @PostMapping("/add")
     fun add(@RequestBody testPaperDto : TestPaperDto , @RequestParam questionIdList: ArrayList<Long>){
         testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId)).let {

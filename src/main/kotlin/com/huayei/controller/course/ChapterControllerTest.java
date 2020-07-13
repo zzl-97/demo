@@ -1,4 +1,4 @@
-package com.huayei.domain.course.controller;
+package com.huayei.controller.course;
 
 import com.huayei.domain.course.repository.ChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
