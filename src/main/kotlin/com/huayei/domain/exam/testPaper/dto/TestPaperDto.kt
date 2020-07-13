@@ -2,16 +2,21 @@ package com.huayei.exam.testQuestions.dto
 
 import com.huayei.exam.testQuestions.event.TestPaper
 import javax.persistence.Column
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 data class TestPaperDto (
-
-    @Column(nullable = false,length = 64)
+    @NotNull
+    @get: Size(max = 64)
     var paperId: Long? = null,
 
-    @Column(nullable = false,length = 64)
+    @NotBlank
+    @get: Size(max = 64)
     var paperName: String? = null,
 
-    @Column(length = 64)
+    @NotBlank
+    @get: Size(max = 64)
     var courseId: Int? = null
 
 ) {

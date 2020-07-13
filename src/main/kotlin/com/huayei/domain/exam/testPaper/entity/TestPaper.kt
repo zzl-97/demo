@@ -3,6 +3,7 @@ package com.huayei.exam.testQuestions.event
 
 import com.huayei.exam.testQuestions.dto.TestPaperDto
 import javax.persistence.*
+import javax.validation.constraints.NotBlank
 
 /**
 * @Description 试卷表

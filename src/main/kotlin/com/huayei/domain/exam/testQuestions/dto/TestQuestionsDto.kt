@@ -2,34 +2,39 @@ package com.huayei.exam.testQuestions.dto
 
 import com.huayei.exam.testQuestions.event.TestQuestions
 import javax.persistence.Column
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 data class TestQuestionsDto (
-
-    @Column(nullable = false,length = 64)
+    @NotNull
+    @get: Size(max = 64)
     var questionId: Long? = null,
 
-    @Column(nullable = false,length = 512)
+    @NotBlank
+    @get: Size(max = 512)
     var questionName: String? = null,
 
-    @Column(nullable = false)
+    @NotBlank
     var questionType: String? = null,
 
-    @Column(nullable = false,length = 512)
+    @NotBlank
+    @get: Size(max = 512)
     var answer: String? = null,
 
-    @Column(length = 64)
+    @get: Size(max = 64)
     var optionA: String? = null,
 
-    @Column(length = 64)
+    @get: Size(max = 64)
     var optionB: String? = null,
 
-    @Column(length = 64)
+    @get: Size(max = 64)
     var optionC: String? = null,
 
-    @Column(length = 64)
+    @get: Size(max = 64)
     var optionD: String? = null,
 
-    @Column(nullable = false)
+    @NotNull
     var courseId: Int? =null
 
 ) {
