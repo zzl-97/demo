@@ -44,32 +44,19 @@ class TestQuestionsController(
     @GetMapping("/download")
     @Throws(FileNotFoundException::class)
     fun downloadLocal(response: HttpServletResponse) { // 下载本地文件
-//        val fileName = URLEncoder.encode("试题导入模板.xlsx","UTF-8") // 文件的默认保存名
-//        response.reset()
-//        response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-//        response.addHeader("Content-Disposition", "attachment; filename=\"$fileName\"")
-//        FileInputStream("D:\\newFile\\试题导入模板.xlsx").use { inputStream -> // 文件模板的存放路径
-//            val b = ByteArray(100)
-//            var len: Int
-//            try {
-//                while (inputStream.read(b).also { len = it } > 0) response.outputStream.write(b, 0, len)
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
-//        }
-
         val fileName = URLEncoder.encode("试题导入模板.xlsx", "UTF-8") // 文件的默认保存名
-        val inStream: InputStream = FileInputStream("D:\\newFile\\试题导入模板.xlsx") // 文件模板的存放路径
         response.reset()
         response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         response.addHeader("Content-Disposition", "attachment; filename=\"$fileName\"")
-        val b = ByteArray(100)
-        var len: Int
-        try {
-            while (inStream.read(b).also { len = it } > 0) response.outputStream.write(b, 0, len)
-            inStream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
+        FileInputStream("D:\\newFile\\试题导入模板.xlsx").use { inputStream ->
+            // 文件模板的存放路径
+            val b = ByteArray(100)
+            var len: Int
+            try {
+                while (inputStream.read(b).also { len = it } > 0) response.outputStream.write(b, 0, len)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -91,8 +78,6 @@ class TestQuestionsController(
             testQuestions.questionName = row.getCell(0).toString()
             testQuestions.questionType = row.getCell(1).toString()
             testQuestions.answer = row.getCell(3).toString()
-            val str = "" // is blank
-            val str1: String? = null // is null
             if (row.getCell(7) != null) {
                 testQuestions.optionA = row.getCell(7).toString()
             }
@@ -118,10 +103,7 @@ class TestQuestionsController(
     @PostMapping("/exists/name")
     fun existsByName(@RequestParam questionName: String): BaseResp {
         //查询该试题名是否存在
-//      questionName 可以为空字符串，不能为空（null）
-//      .let方法，只能验证对象是否为空，无法验证字符串是否空白
-        val result = testQuestionsRepository.existsByQuestionName(questionName)
-        return if (result) {
+        return if (testQuestionsRepository.existsByQuestionName(questionName)) {
             BaseResp(message = "该试题存在。")
         } else {
             BaseResp(message = "该试题不存在。")
@@ -136,15 +118,21 @@ class TestQuestionsController(
     @PostMapping("/add")
     fun addQuestion(@Valid @RequestBody dto: TestQuestionsDto): BaseResp {
         //查询有没有该试题名存在
-        val result =  testQuestionsRepository.existsByQuestionName(dto.questionName!!)
-        return if (result) {
+        return if (testQuestionsRepository.existsByQuestionName(dto.questionName!!)) {
             BaseResp(message = "该试题存在。")
         } else {
             //没有就添加到数据库
             testQuestionsRepository.save(
                 TestQuestions(
-                    null, dto.questionName, dto.questionType,
-                    dto.answer, dto.optionA, dto.optionB, dto.optionC, dto.optionD, dto.courseId
+                    questionId = null,
+                    questionName = dto.questionName,
+                    questionType = dto.questionType,
+                    answer = dto.answer,
+                    optionA = dto.optionA,
+                    optionB = dto.optionB,
+                    optionC = dto.optionC,
+                    optionD = dto.optionD,
+                    courseId = dto.courseId
                 )
             )
             BaseResp(message = "保存成功。")
@@ -205,14 +193,16 @@ class TestQuestionsController(
     @PostMapping("")
     fun getTestQuestions(@RequestBody form: PageReq): PageResp {
         val courseId: Long = 0
-        testQuestionsRepository.findAll(this.getSpec(courseId), PageRequest.of(form.page - 1, form.size))
+        val questionType: String ="单选题"
+        testQuestionsRepository.findAll(this.getSpec(courseId,questionType), PageRequest.of(form.page - 1, form.size))
         TODO("获取课程列表")
     }
 
-    private fun getSpec(courseId: Long?): Specification<TestQuestions> {
+    private fun getSpec(courseId: Long?,questionType: String): Specification<TestQuestions> {
         return Specification { root, _, cb ->
             val list = ArrayList<Predicate>()
             list.add(cb.equal(root.get<Long>("courseId"), courseId))
+            list.add(cb.equal(root.get<String>("questionType"), questionType))
             val p = arrayOfNulls<Predicate>(list.size)
             cb.and(*list.toArray(p))
         }

@@ -1,4 +1,4 @@
-package com.huayei.exam.testPaper.controller
+package com.huayei.controller.exam.testPaper
 
 import com.huayei.base.BaseResp
 import com.huayei.exam.testPaper.event.TestPaperQuestion
