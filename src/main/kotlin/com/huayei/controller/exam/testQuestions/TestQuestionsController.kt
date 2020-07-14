@@ -3,6 +3,7 @@ package com.huayei.controller.exam.testQuestions
 import com.huayei.base.BaseResp
 import com.huayei.base.PageReq
 import com.huayei.base.PageResp
+import com.huayei.domain.exam.testQuestions.request.QuestionReq
 import com.huayei.exam.testQuestions.dto.TestQuestionsDto
 import com.huayei.exam.testQuestions.event.TestQuestions
 import com.huayei.exam.testQuestions.repository.TestQuestionsRepository
@@ -13,11 +14,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.domain.Specification
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.io.*
 import java.net.URLEncoder
-import java.util.*
 import javax.persistence.criteria.Predicate
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -190,19 +189,17 @@ class TestQuestionsController(
         }.orElse(BaseResp(status = 1, message = "修改失败。"))
     }
 
-    @PostMapping("")
-    fun getTestQuestions(@RequestBody form: PageReq): PageResp {
-        val courseId: Long = 0
-        val questionType: String ="单选题"
-        testQuestionsRepository.findAll(this.getSpec(courseId,questionType), PageRequest.of(form.page - 1, form.size))
+    @PostMapping("/questions")
+    fun getTestQuestions(@RequestBody form: QuestionReq): PageResp {
+        testQuestionsRepository.findAll(this.getSpec(form), PageRequest.of(form.page - 1, form.size))
         TODO("获取课程列表")
     }
 
-    private fun getSpec(courseId: Long?,questionType: String): Specification<TestQuestions> {
+    private fun getSpec(form: QuestionReq): Specification<TestQuestions> {
         return Specification { root, _, cb ->
             val list = ArrayList<Predicate>()
-            list.add(cb.equal(root.get<Long>("courseId"), courseId))
-            list.add(cb.equal(root.get<String>("questionType"), questionType))
+            list.add(cb.equal(root.get<Long>("courseId"), form.courseId))
+            list.add(cb.equal(root.get<String>("questionType"), form.questionType))
             val p = arrayOfNulls<Predicate>(list.size)
             cb.and(*list.toArray(p))
         }
