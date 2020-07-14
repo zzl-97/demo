@@ -14,6 +14,6 @@ import com.huayei.base.PageReq
  * @Since 1.0
  **/
 data class QuestionReq (
-    var courseId: Int? = null,
+    var courseId: Long? = null,
     var questionType: String? = null
 ) : PageReq()
