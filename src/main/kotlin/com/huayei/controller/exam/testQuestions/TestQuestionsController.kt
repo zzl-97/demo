@@ -204,25 +204,4 @@ class TestQuestionsController(
             cb.and(*list.toArray(p))
         }
     }
-
-    /**
-     * 根据课程id查询试题
-     * @param id 课程id
-     * @return 返回一个试卷信息
-     */
-    @PostMapping("/findByCourseId/{id}")
-    fun getQuestionByCourseId(@PathVariable id: Long): BaseResp {
-        return BaseResp(data = testQuestionsRepository.findByCourseId(id))
-    }
-
-    /**
-     * 根据课程id和题型查询试题
-     * @param id 课程id
-     * @param type 题型
-     * @return 试题集合
-     */
-    @PostMapping("/findByIdAndType/{id}")
-    fun getQuestionsOf(@PathVariable id: Int, @RequestParam type: String): BaseResp {
-        return BaseResp(data = questionsService.getQuestionsOf(id, type))
-    }
 }

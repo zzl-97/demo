@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @CrossOrigin // 跨域请求
-@RequestMapping("/testPaper")
+@RequestMapping("/test/papers")
 class TestPaperController(
     val testPaperRepository: TestPaperRepository,
     val testPaperQuestionRepository: TestPaperQuestionRepository
@@ -30,7 +30,7 @@ class TestPaperController(
      * @return 成功-删除成功！，失败-删除失败！
      */
     @Transactional(readOnly = true)
-    @DeleteMapping("/del/{id}")
+    @DeleteMapping("/{id}")
     fun delPaper(@PathVariable id: Long): BaseResp {
         return testPaperRepository.findById(id).map { paper ->
             testPaperQuestionRepository.findByPaperId(paper.paperId!!).map {
@@ -74,7 +74,7 @@ class TestPaperController(
      * @param paperDto 修改前的试卷信息
      * @return
      */
-    @PostMapping("/updateState/{id}/{state}")
+    @PutMapping("/{id}/{state}")
     fun updatePaper(@PathVariable id: Long, @PathVariable state: Int, @RequestBody paperDto: TestPaperDto): BaseResp {
         return testPaperRepository.findById(id).map {
             it.paperState = state
