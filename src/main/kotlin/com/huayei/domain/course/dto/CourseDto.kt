@@ -14,15 +14,15 @@ import javax.validation.constraints.Size
 data class CourseDto(
 
 
-    var courseId: Int? = null,
+    var courseId: Long? = null, //课程ID
     @get: Size(max = 256)
-    var courseName: String? = null,
+    var courseName: String? = null, //课程名字
 
-    var coursePicture: String? = null,
+    var coursePicture: String? = null, //课件
 
-    var courseIntroduce: String? = null,
+    var courseIntroduce: String? = null, //课程结束
 
-    var userId: Long? = null,
+    var userId: Long? = null, //用户ID
 
     var message: String? = null
 ) {

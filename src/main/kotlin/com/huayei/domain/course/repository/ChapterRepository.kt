@@ -16,7 +16,11 @@ import java.util.*
 @Repository
 interface ChapterRepository : JpaRepository<Chapter, Int>, JpaSpecificationExecutor<Chapter> {
 
-    //根据章节名字查询
+    /**
+     * 根据章节名字来查询
+     * @param Chapter 章节名
+     * return Optional<Chapter>非空章节对象
+     */
     // SELECT * FROM CHAPTER C WHERE C.CHAPTER_NAME =
     fun findByChapterName(Chapter: String): Optional<Chapter>
 
@@ -27,6 +31,10 @@ interface ChapterRepository : JpaRepository<Chapter, Int>, JpaSpecificationExecu
      */
     fun existsByChapterName(name: String): Boolean
 
-    //根据 课程ID 来查询
+    /**
+     * 根据课程ID来查询章节
+     * @param courseId 课程ID
+     * return List<Chapter>对象
+     */
     fun findByCourseId(courseId: Int): List<Chapter>
 }

@@ -16,7 +16,7 @@ data class CourseUser(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var courseUserId: Int? = null,
+    var courseUserId: Long? = null,
 
     var courseId: Int? = null,
 

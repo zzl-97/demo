@@ -1,5 +1,6 @@
 package com.huayei.controller.course
 
+import com.huayei.base.BaseResp
 import com.huayei.base.PageResp
 import com.huayei.domain.course.dto.ChapterDto
 import com.huayei.domain.course.repository.ChapterRepository
@@ -27,21 +28,22 @@ class ChapterController(
      * @param
      */
     @PostMapping("/add")
-    fun addChapter(@RequestBody chapter: ChapterDto): ChapterDto {
+    fun addChapter(@RequestBody chapter: ChapterDto): BaseResp {
         //先查询章节名字是否存在
 //        val oldChapter: Chapter? = chapter.chapterName?.let { chapterService.selectChapterName(it) }
         if (chapterRepository.existsByChapterName(chapter.chapterName!!)) {
-            return ChapterDto(message = "章节名称已存在")
+            return BaseResp(status = 1,message = "章节名称已存在")
         }
 
         chapterService.addChapter(chapter.entity())
-        return ChapterDto(message = "章节添加成功")
+        return BaseResp(status = 0,message = "章节添加成功",data = chapter)
     }
 
     /**
      * 删除章节
      * @param chapterId 章节ID
      */
+
     @DeleteMapping("/{chapterId}")
     fun deleteChapter(@PathVariable chapterId : Int):ChapterDto{
         //先查询 后删除 //还有作业还没删除 作业功能完成再删除
@@ -62,6 +64,7 @@ class ChapterController(
             existsChapter.courseId?.let {
 
             }
+
             chapterRepository.save(existsChapter)
         }
         return ChapterDto(message = "修改章节成功")
@@ -73,6 +76,8 @@ class ChapterController(
      */
     @PostMapping("")
     fun selectChapter(@RequestBody form: ChapterReq): PageResp {
+
+
         val result = chapterService.getChapters(form)
         val data = result.content.map {
             it.dto()

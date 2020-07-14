@@ -78,15 +78,15 @@ class MenuController(
     @PutMapping()
     fun updateMenu(@PathVariable id: Long, @RequestBody menu: Menu): BaseResp {
         //根据id查询菜单
-        menuService.menuRepository.findById(id).map {
+        return   menuService.menuRepository.findById(id).map {
             //遍历赋值
             it.menuName = menu.menuName
             it.url = menu.url
             it.menuState = menu.menuState
             it.fid = menu.fid
             menuService.menuRepository.save(it)
-        }.orElse( return BaseResp(status = 1,message = "修改失败"))
-        return BaseResp(status = 0,message = "修改成功")
+            BaseResp(status = 0,message = "修改成功")
+        }.orElse( BaseResp(status = 1,message = "修改失败"))
     }
 
     /**
@@ -106,7 +106,7 @@ class MenuController(
             //将Id赋值给menuRole
             menuRole.roleId = dtoMenuRole.roleId
             menuRole.menuId = item
-            list.add(menuRole);
+            list.add(menuRole)
         }
         //执行添加的方法
         menuRoleService.menuRoleRepository.saveAll(list)

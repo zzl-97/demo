@@ -18,7 +18,7 @@ data class Chapter(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)//序列
-    var chapterId: Int? = null, //章节ID   自增ID最好使用Long类型
+    var chapterId: Long? = null, //章节ID   自增ID最好使用Long类型
 
     var chapterName: String? = null,//章节名
 

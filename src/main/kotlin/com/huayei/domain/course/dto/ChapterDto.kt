@@ -1,6 +1,9 @@
 package com.huayei.domain.course.dto
 
 import com.huayei.domain.course.entity.Chapter
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 /**
  *@Description TODO
@@ -10,15 +13,14 @@ import com.huayei.domain.course.entity.Chapter
  **/
 data class ChapterDto(
 
-//    @get: NotNull
-    var chapterId: Int? = null, //章节ID
+    @get: NotNull
+    var chapterId: Long? = null, //章节ID
 
-//    @get: Size(max = 256)
-//    @get: Length
-    var chapterName: String? = null,//章节名
+    @get: Size(max = 256)
+    var chapterName: String? = null, //章节名
 
-//    @get: NotBlank
-    var courseware: String? = null,//课件路径
+    @get: NotBlank
+    var courseware: String? = null, //课件路径
 
     var courseId: String? = null,//课程ID
 

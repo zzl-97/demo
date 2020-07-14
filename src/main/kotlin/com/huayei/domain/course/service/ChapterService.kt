@@ -19,13 +19,19 @@ import javax.persistence.criteria.Predicate
  **/
 @Service
 class ChapterService(
-
     var chapterRepository: ChapterRepository
 ) {
 
+    /**
+     * 根据章节名称来查询
+     * @param chapterName 章节名称
+     */
     fun getChapter(chapterName: String) = chapterRepository.findByChapterName(chapterName)
 
-    //根据课程ID来查询 章节
+    /**
+     * 根据课程ID来查询底下的章节
+     * @param courseId 课程ID
+     */
     fun getChaptersOf(courseId: Int) = chapterRepository.findByCourseId(courseId)
 
     /**

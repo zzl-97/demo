@@ -10,4 +10,6 @@ import org.springframework.transaction.annotation.Transactional
 interface TestPaperQuestionRepository : JpaRepository<TestPaperQuestion, Long>, JpaSpecificationExecutor<TestPaperQuestion> {
 
     fun deleteByPaperId(paperId: Long)
+
+    fun findByPaperId(paperId: Long): List<TestPaperQuestion>
 }

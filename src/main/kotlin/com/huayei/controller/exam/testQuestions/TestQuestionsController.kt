@@ -1,6 +1,8 @@
 package com.huayei.controller.exam.testQuestions
 
 import com.huayei.base.BaseResp
+import com.huayei.base.PageReq
+import com.huayei.base.PageResp
 import com.huayei.exam.testQuestions.dto.TestQuestionsDto
 import com.huayei.exam.testQuestions.event.TestQuestions
 import com.huayei.exam.testQuestions.repository.TestQuestionsRepository
@@ -9,13 +11,18 @@ import jxl.read.biff.BiffException
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.io.*
 import java.net.URLEncoder
 import java.util.*
+import javax.persistence.criteria.Predicate
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.validation.Valid
+import kotlin.collections.ArrayList
 
 /**
  * @Description 试题管理功能
@@ -26,7 +33,7 @@ import javax.servlet.http.HttpServletResponse
  */
 @RestController
 @CrossOrigin // 跨域请求
-@RequestMapping("/testQuestion")
+@RequestMapping("/test/questions")
 class TestQuestionsController(
     val testQuestionsRepository: TestQuestionsRepository,
     val questionsService: TestQuestionsService
@@ -37,7 +44,21 @@ class TestQuestionsController(
     @GetMapping("/download")
     @Throws(FileNotFoundException::class)
     fun downloadLocal(response: HttpServletResponse) { // 下载本地文件
-        val fileName = URLEncoder.encode("试题导入模板.xlsx","UTF-8") // 文件的默认保存名
+//        val fileName = URLEncoder.encode("试题导入模板.xlsx","UTF-8") // 文件的默认保存名
+//        response.reset()
+//        response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+//        response.addHeader("Content-Disposition", "attachment; filename=\"$fileName\"")
+//        FileInputStream("D:\\newFile\\试题导入模板.xlsx").use { inputStream -> // 文件模板的存放路径
+//            val b = ByteArray(100)
+//            var len: Int
+//            try {
+//                while (inputStream.read(b).also { len = it } > 0) response.outputStream.write(b, 0, len)
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//            }
+//        }
+
+        val fileName = URLEncoder.encode("试题导入模板.xlsx", "UTF-8") // 文件的默认保存名
         val inStream: InputStream = FileInputStream("D:\\newFile\\试题导入模板.xlsx") // 文件模板的存放路径
         response.reset()
         response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -57,9 +78,9 @@ class TestQuestionsController(
      * @param courseId 课程id
      * @return 返回保存是否成功
      */
-    @GetMapping("/excel")
+    @GetMapping("/import")
     @Throws(IOException::class, BiffException::class)
-    fun excelUser( @RequestParam courseId: Int): String? {
+    fun excelUser(@RequestParam courseId: Int): String? {
         val workbook = XSSFWorkbook(FileInputStream(File("C:\\Users\\12508\\Desktop\\试题导入模板.xlsx")))
         val sheet: XSSFSheet = workbook.getSheetAt(0)
         val list: MutableList<TestQuestions> = ArrayList<TestQuestions>()
@@ -70,25 +91,19 @@ class TestQuestionsController(
             testQuestions.questionName = row.getCell(0).toString()
             testQuestions.questionType = row.getCell(1).toString()
             testQuestions.answer = row.getCell(3).toString()
-            if(row.getCell(7)!=null) {
+            val str = "" // is blank
+            val str1: String? = null // is null
+            if (row.getCell(7) != null) {
                 testQuestions.optionA = row.getCell(7).toString()
-            }else {
-                testQuestions.optionA = null
             }
-            if(row.getCell(8)!=null) {
+            if (row.getCell(8) != null) {
                 testQuestions.optionB = row.getCell(8).toString()
-            }else {
-                testQuestions.optionB = null
             }
-            if(row.getCell(9)!=null) {
+            if (row.getCell(9) != null) {
                 testQuestions.optionC = row.getCell(9).toString()
-            }else {
-                testQuestions.optionC = null
             }
-            if(row.getCell(10)!=null) {
+            if (row.getCell(10) != null) {
                 testQuestions.optionD = row.getCell(10).toString()
-            }else {
-                testQuestions.optionD = null
             }
             testQuestions.courseId = courseId
             list.add(testQuestions)
@@ -100,13 +115,15 @@ class TestQuestionsController(
     /**
      * 查询试题名是否存在
      */
-    @PostMapping("/findName")
-    fun findQuestionName(@RequestParam questionName: String): BaseResp {
+    @PostMapping("/exists/name")
+    fun existsByName(@RequestParam questionName: String): BaseResp {
         //查询该试题名是否存在
-        val result = questionName.let { testQuestionsRepository.existsByQuestionName(it) }
-        return if(result){
+//      questionName 可以为空字符串，不能为空（null）
+//      .let方法，只能验证对象是否为空，无法验证字符串是否空白
+        val result = testQuestionsRepository.existsByQuestionName(questionName)
+        return if (result) {
             BaseResp(message = "该试题存在。")
-        }else {
+        } else {
             BaseResp(message = "该试题不存在。")
         }
     }
@@ -117,15 +134,19 @@ class TestQuestionsController(
      * @return 返回信息
      */
     @PostMapping("/add")
-    fun addQuestion(@RequestBody dto: TestQuestionsDto): BaseResp {
+    fun addQuestion(@Valid @RequestBody dto: TestQuestionsDto): BaseResp {
         //查询有没有该试题名存在
-        val result = dto.questionName?.let { testQuestionsRepository.existsByQuestionName(it) }
-        return if(result!!){
+        val result =  testQuestionsRepository.existsByQuestionName(dto.questionName!!)
+        return if (result) {
             BaseResp(message = "该试题存在。")
-        }else {
+        } else {
             //没有就添加到数据库
-            testQuestionsRepository.save(TestQuestions(null, dto.questionName, dto.questionType,
-                dto.answer, dto.optionA, dto.optionB, dto.optionC, dto.optionD, dto.courseId))
+            testQuestionsRepository.save(
+                TestQuestions(
+                    null, dto.questionName, dto.questionType,
+                    dto.answer, dto.optionA, dto.optionB, dto.optionC, dto.optionD, dto.courseId
+                )
+            )
             BaseResp(message = "保存成功。")
         }
     }
@@ -135,14 +156,14 @@ class TestQuestionsController(
      * @param id 试卷id
      * @return 删除成功
      */
-    @DeleteMapping("/deleteById/{id}")
+    @DeleteMapping("/{id}")
     fun delQuestion(@PathVariable id: Long): BaseResp {
         //查询该试卷id是否存在
         return testQuestionsRepository.findById(id).map {
             //存在才删除
             testQuestionsRepository.deleteById(id)
-            BaseResp(status = 0,message = "删除成功。")
-        }.orElse(BaseResp(status = 1,message = "删除失败。"))
+            BaseResp(status = 0, message = "删除成功。")
+        }.orElse(BaseResp(status = 1, message = "删除失败。"))
 
     }
 
@@ -151,7 +172,7 @@ class TestQuestionsController(
      * @param id 试题id
      * @return 返回试题信息
      */
-    @PostMapping("/findOneQuestion/{id}")
+    @GetMapping("/{id}")
     fun getQuestionOf(@PathVariable id: Long): BaseResp {
         return BaseResp(data = questionsService.getQuestion(id))
     }
@@ -162,7 +183,7 @@ class TestQuestionsController(
      * @param question 试卷信息
      * @return 修改成功-返回修改后的试题信息，修改失败-返回“修改失败”
      */
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
         @RequestBody question: TestQuestionsDto,
@@ -177,8 +198,24 @@ class TestQuestionsController(
             existingQuestion.optionC = question.optionC
             existingQuestion.optionD = question.optionD
             testQuestionsRepository.save(existingQuestion)
-            BaseResp(status = 0,message = "修改成功。",data = questionsService.getQuestion(id))
-        }.orElse(BaseResp(status = 1,message = "修改失败。"))
+            BaseResp(status = 0, message = "修改成功。", data = questionsService.getQuestion(id))
+        }.orElse(BaseResp(status = 1, message = "修改失败。"))
+    }
+
+    @PostMapping("")
+    fun getTestQuestions(@RequestBody form: PageReq): PageResp {
+        val courseId: Long = 0
+        testQuestionsRepository.findAll(this.getSpec(courseId), PageRequest.of(form.page - 1, form.size))
+        TODO("获取课程列表")
+    }
+
+    private fun getSpec(courseId: Long?): Specification<TestQuestions> {
+        return Specification { root, _, cb ->
+            val list = ArrayList<Predicate>()
+            list.add(cb.equal(root.get<Long>("courseId"), courseId))
+            val p = arrayOfNulls<Predicate>(list.size)
+            cb.and(*list.toArray(p))
+        }
     }
 
     /**

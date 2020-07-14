@@ -22,14 +22,14 @@ class CourseService(
     val courseRepository: CourseRepository
 ) {
 
-    fun selectCourseName(courseName: String) = courseRepository.findByCourseName(courseName);
+    fun getCourseName(courseName: String) = courseRepository.findByCourseName(courseName);
 
-    fun selectCourse() = courseRepository.findAllBy();
+    fun getCourse() = courseRepository.findAllBy();
 //  courseRepository.findAll()
     /**
      * 课程的查询
      */
-    fun selectCourseAll(@RequestBody courseDto: CourseDto): List<Course> {
+    fun getCourseAll(@RequestBody courseDto: CourseDto): List<Course> {
         val course = courseDto.entity();
         val spec: Specification<Course?> =
             Specification<Course?> { root: Root<Course?>, query: CriteriaQuery<*>, criteriaBuilder: CriteriaBuilder ->

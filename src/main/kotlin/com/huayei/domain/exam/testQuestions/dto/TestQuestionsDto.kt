@@ -7,11 +7,11 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 data class TestQuestionsDto (
-    @NotNull
+    @get: NotNull
     @get: Size(max = 64)
     var questionId: Long? = null,
 
-    @NotBlank
+    @get: NotNull
     @get: Size(max = 512)
     var questionName: String? = null,
 

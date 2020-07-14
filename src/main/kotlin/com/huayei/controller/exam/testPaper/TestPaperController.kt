@@ -10,19 +10,19 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 /**
-* @Description 试卷管理功能
-* @Author liuh@huayei.com
-* @Date 2020/7/9 9:30
-* @Since 1.0
-*
-*/
+ * @Description 试卷管理功能
+ * @Author liuh@huayei.com
+ * @Date 2020/7/9 9:30
+ * @Since 1.0
+ *
+ */
 @RestController
 @CrossOrigin // 跨域请求
 @RequestMapping("/testPaper")
-class TestPaperController (
+class TestPaperController(
     val testPaperRepository: TestPaperRepository,
     val testPaperQuestionRepository: TestPaperQuestionRepository
-){
+) {
 
     /**
      * 试卷的删除
@@ -32,11 +32,12 @@ class TestPaperController (
     @Transactional(readOnly = true)
     @DeleteMapping("/del/{id}")
     fun delPaper(@PathVariable id: Long): BaseResp {
-        return testPaperRepository.findById(id).map {
-            testPaperRepository.deleteById(id)
-            testPaperQuestionRepository.findById(id).map {
-                testPaperQuestionRepository.deleteById(id)
+        return testPaperRepository.findById(id).map { paper ->
+            testPaperQuestionRepository.findByPaperId(paper.paperId!!).map {
+                testPaperQuestionRepository.delete(it)
             }
+//            testPaperQuestionRepository.deleteAll(testPaperQuestionRepository.findByPaperId(paper.paperId!!))
+            testPaperRepository.delete(paper)
             BaseResp(data = "删除成功！")
         }.orElse(BaseResp(data = "删除失败！"))
     }
@@ -47,11 +48,17 @@ class TestPaperController (
      */
     @Transactional(readOnly = true)
     @PostMapping("/add")
-    fun add(@RequestBody testPaperDto : TestPaperDto , @RequestParam questionIdList: ArrayList<Long>){
-        testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId,0)).let {
+    fun add(@RequestBody testPaperDto: TestPaperDto, @RequestParam questionIdList: ArrayList<Long>) {
+//        val paper = testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId,0))
+//        val questions = questionIdList.map { // forEach  for
+////            testPaperQuestionRepository.save(TestPaperQuestion(paperId = paper.paperId, questionId = it))
+//            TestPaperQuestion(paperId = paper.paperId, questionId = it)
+//        }
+//        testPaperQuestionRepository.saveAll(questions)
+        testPaperRepository.save(TestPaper(null, testPaperDto.paperName, testPaperDto.courseId, 0)).let {
             val list = ArrayList<TestPaperQuestion>()
             val t = TestPaperQuestion()
-            for (i in 0 until questionIdList.size){
+            for (i in 0 until questionIdList.size) {
                 t.paperId = it.paperId
                 t.questionId = questionIdList[i]
                 list.add(t)
@@ -68,11 +75,11 @@ class TestPaperController (
      * @return
      */
     @PostMapping("/updateState/{id}/{state}")
-    fun updatePaper(@PathVariable id: Long,@PathVariable state: Int,@RequestBody paperDto: TestPaperDto): BaseResp{
+    fun updatePaper(@PathVariable id: Long, @PathVariable state: Int, @RequestBody paperDto: TestPaperDto): BaseResp {
         return testPaperRepository.findById(id).map {
             it.paperState = state
             testPaperRepository.save(it)
-            BaseResp(status = 0,message = "修改成功。",data = it.dto())
-        }.orElse(BaseResp(status = 1,message = "修改失败。"))
+            BaseResp(status = 0, message = "修改成功。", data = it.dto())
+        }.orElse(BaseResp(status = 1, message = "修改失败。"))
     }
 }

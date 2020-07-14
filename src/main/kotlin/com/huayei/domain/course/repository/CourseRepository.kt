@@ -28,6 +28,8 @@ interface CourseRepository : JpaRepository<Course, Int>, JpaSpecificationExecuto
      */
     fun existsByCourseName(name: String): Boolean
 
-    //查询所有的课程 添加章节用
+    /**
+     *  查询所有的课程 添加章节用
+     */
     fun findAllBy(): List<Course>
 }
