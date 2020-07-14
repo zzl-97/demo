@@ -12,7 +12,7 @@ import javax.persistence.criteria.Predicate
 
 
 /**
- *@Description TODO
+ *@Description 章节的服务层
  *Author zzl@huayei.com
  *Date 2020/7/8 10:18
  *@Since 1.0
@@ -32,7 +32,7 @@ class ChapterService(
      * 根据课程ID来查询底下的章节
      * @param courseId 课程ID
      */
-    fun getChaptersOf(courseId: Int) = chapterRepository.findByCourseId(courseId)
+    fun getChaptersOf(courseId: Long) = chapterRepository.findByCourseId(courseId)
 
     /**
      * 添加章节  // 新增、修改、删除时需要对部分参数进行验证
@@ -55,7 +55,6 @@ class ChapterService(
             if (!form.name.isNullOrBlank()) {
                 list.add(cb.equal(root.get<String>("chapterName"), form.name))
             }
-            // !=   <>
             form.courseId?.let {
                 list.add(cb.equal(root.get<String>("courseId"), form.courseId))
             }

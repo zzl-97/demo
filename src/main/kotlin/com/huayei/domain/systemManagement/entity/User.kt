@@ -9,7 +9,7 @@ import java.sql.Date
 import javax.persistence.*
 
 /**
-*@Description TODO
+*@Description 用户的实体
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 /**
-*@Description TODO
+*@Description 角色的DAO
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0

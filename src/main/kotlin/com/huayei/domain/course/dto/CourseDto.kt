@@ -5,7 +5,7 @@ import com.sun.istack.NotNull
 import javax.validation.constraints.Size
 
 /**
- * @Description TODO
+ * @Description 课程的DTO
  * @Author liuh@huayei.com
  * @Date 2020/7/6 15:46
  * @Since 1.0

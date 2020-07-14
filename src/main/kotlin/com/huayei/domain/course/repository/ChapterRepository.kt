@@ -7,12 +7,11 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 /**
- *@Description TODO
+ *@Description 章节DAO
  *Author zzl@huayei.com
  *Date 2020/7/8 10:15
  *@Since 1.0
  **/
-
 @Repository
 interface ChapterRepository : JpaRepository<Chapter, Int>, JpaSpecificationExecutor<Chapter> {
 
@@ -36,5 +35,5 @@ interface ChapterRepository : JpaRepository<Chapter, Int>, JpaSpecificationExecu
      * @param courseId 课程ID
      * return List<Chapter>对象
      */
-    fun findByCourseId(courseId: Int): List<Chapter>
+    fun findByCourseId(courseId: Long): List<Chapter>
 }

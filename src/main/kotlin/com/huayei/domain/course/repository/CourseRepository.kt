@@ -7,16 +7,14 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
 /**
- *@Description TODO
+ *@Description 课程DAO
  *Author zzl@huayei.com
  *Date 2020/7/8 9:15
  *@Since 1.0
  **/
-
-
 @Repository
 @Transactional(readOnly = true)
-interface CourseRepository : JpaRepository<Course, Int>, JpaSpecificationExecutor<Course> {
+interface CourseRepository : JpaRepository<Course, Long>, JpaSpecificationExecutor<Course> {
 
     //根据名字来查询课程是否存在
     fun findByCourseName(CourseName: String?): Course?

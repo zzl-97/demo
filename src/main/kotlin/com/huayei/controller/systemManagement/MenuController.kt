@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 /**
- *@Description TODO
+ *@Description 菜单Controller
  *Author zzl@huayei.com
  *Date 2020/7/7 18:19
  *@Since 1.0
@@ -31,10 +31,8 @@ class MenuController(
      * return 菜单集合
      */
     @PutMapping("/selectMenu.ait/{id}")
-    fun getMenu(@PathVariable id: Long): List<DTOMenu> {
-        return menuService.getMenu(id).map {
-            it.dto()
-        }
+    fun getMenu(@PathVariable id: Long): BaseResp {
+        return BaseResp(data = menuService.getMenu(id))
     }
 
     /**
@@ -46,7 +44,7 @@ class MenuController(
     fun getMenuTop(): BaseResp {
         return menuRepository.findById(0).map {
             BaseResp(status = 0, message = "ok", data = it)
-        }.orElse(return BaseResp(status = 0, message = "no",data = null))
+        }.orElse( BaseResp(status = 0, message = "no",data = null))
     }
 
     /**
@@ -58,7 +56,7 @@ class MenuController(
     fun getMenuUnder(@PathVariable id: Long): BaseResp {
         return menuRepository.findById(id).map {
             BaseResp(status = 0, message = "ok", data = it)
-        }.orElse(return BaseResp(status = 0, message = "no",data = null))
+        }.orElse( BaseResp(status = 0, message = "no",data = null))
     }
 
     /**

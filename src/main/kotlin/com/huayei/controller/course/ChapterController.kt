@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 /**
- *@Description TODO
+ *@Description 章节的controller
  *Author zzl@huayei.com
  *Date 2020/7/8 10:18
  *@Since 1.0
@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @CrossOrigin//跨域
 @RequestMapping("/chapters")
-class ChapterController(
-    val chapterService: ChapterService,
-    val chapterRepository: ChapterRepository
-) {
+class ChapterController(val chapterService: ChapterService, val chapterRepository: ChapterRepository) {
 
     /**
      * 添加章节
@@ -76,7 +73,6 @@ class ChapterController(
      */
     @PostMapping("")
     fun selectChapter(@RequestBody form: ChapterReq): PageResp {
-
 
         val result = chapterService.getChapters(form)
         val data = result.content.map {

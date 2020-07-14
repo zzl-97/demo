@@ -3,7 +3,7 @@ package com.huayei.domain.systemManagement.entity
 import com.huayei.domain.systemManagement.dto.DTOMenuRole
 import javax.persistence.*
 /**
-*@Description TODO
+*@Description 菜单与角色的实体
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0

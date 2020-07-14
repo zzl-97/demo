@@ -3,9 +3,16 @@ package com.huayei.domain.course.dto
 import com.huayei.domain.course.entity.Word
 import java.util.*
 
+/**
+ * @Description 作业的DTO
+ * @Author liuh@huayei.com
+ * @Date 2020/7/6 15:46
+ * @Since 1.0
+ *
+ */
 data class WordDto(
 
-    var wordId: Long? = null, //工作ID
+    var wordId: Long? = null, //作业ID
 
     var wordName: String? = null, //作业名称
 

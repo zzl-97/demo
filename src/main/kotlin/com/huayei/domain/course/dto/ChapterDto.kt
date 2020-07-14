@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 /**
- *@Description TODO
+ *@Description 章节的DTO
  *Author zzl@huayei.com
  *Date 2020/7/8 10:21
  *@Since 1.0

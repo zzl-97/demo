@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 /**
-*@Description TODO
+*@Description 菜单与角色的DAO
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0
@@ -20,6 +20,5 @@ interface MenuRoleRepository : JpaRepository<MenuRole, Long>, JpaSpecificationEx
      * 根据角色Id删除角色
      * @param roleId 角色ID
      */
-    //根据roleID删除
     fun deleteByRoleId(roleId: Long?);
 }
