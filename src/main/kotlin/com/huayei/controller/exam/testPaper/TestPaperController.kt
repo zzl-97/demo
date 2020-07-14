@@ -49,22 +49,12 @@ class TestPaperController(
     @Transactional(readOnly = true)
     @PostMapping("/add")
     fun add(@RequestBody testPaperDto: TestPaperDto, @RequestParam questionIdList: ArrayList<Long>) {
-//        val paper = testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId,0))
-//        val questions = questionIdList.map { // forEach  for
-////            testPaperQuestionRepository.save(TestPaperQuestion(paperId = paper.paperId, questionId = it))
-//            TestPaperQuestion(paperId = paper.paperId, questionId = it)
-//        }
-//        testPaperQuestionRepository.saveAll(questions)
-        testPaperRepository.save(TestPaper(null, testPaperDto.paperName, testPaperDto.courseId, 0)).let {
-            val list = ArrayList<TestPaperQuestion>()
-            val t = TestPaperQuestion()
-            for (i in 0 until questionIdList.size) {
-                t.paperId = it.paperId
-                t.questionId = questionIdList[i]
-                list.add(t)
-            }
-            testPaperQuestionRepository.saveAll(list)
+        val paper = testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId,0))
+        val questions = questionIdList.map { // forEach  for
+//            testPaperQuestionRepository.save(TestPaperQuestion(paperId = paper.paperId, questionId = it))
+            TestPaperQuestion(paperId = paper.paperId, questionId = it)
         }
+        testPaperQuestionRepository.saveAll(questions)
     }
 
     /**
@@ -72,10 +62,10 @@ class TestPaperController(
      * @param id 试卷id
      * @param state 试卷状态
      * @param paperDto 修改前的试卷信息
-     * @return
+     * @return 成功-“修改成功”，返回修改后试卷信息，失败-“修改失败”
      */
     @PutMapping("/{id}/{state}")
-    fun updatePaper(@PathVariable id: Long, @PathVariable state: Int, @RequestBody paperDto: TestPaperDto): BaseResp {
+    fun updatePaper(@PathVariable id: Long, @PathVariable state: Int): BaseResp {
         return testPaperRepository.findById(id).map {
             it.paperState = state
             testPaperRepository.save(it)

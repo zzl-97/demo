@@ -12,6 +12,7 @@ import jxl.read.biff.BiffException
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.web.bind.annotation.*
@@ -189,17 +190,24 @@ class TestQuestionsController(
         }.orElse(BaseResp(status = 1, message = "修改失败。"))
     }
 
-    @PostMapping("/questions")
+    @PostMapping("/page")
     fun getTestQuestions(@RequestBody form: QuestionReq): PageResp {
-        testQuestionsRepository.findAll(this.getSpec(form), PageRequest.of(form.page - 1, form.size))
-        TODO("获取课程列表")
+        var result: Page<TestQuestions>  = testQuestionsRepository.findAll(this.getSpec(form), PageRequest.of(form.page - 1, form.size))
+        val data = result.content.map {
+            it.dto()
+        }
+        return PageResp(page = form.page, size = form.size, total = result.totalElements, data = data)
     }
 
     private fun getSpec(form: QuestionReq): Specification<TestQuestions> {
         return Specification { root, _, cb ->
             val list = ArrayList<Predicate>()
-            list.add(cb.equal(root.get<Long>("courseId"), form.courseId))
-            list.add(cb.equal(root.get<String>("questionType"), form.questionType))
+            if (!form.questionType.isNullOrBlank()) {
+                list.add(cb.equal(root.get<String>("questionType"), form.questionType))
+            }
+            form.courseId?.let {
+                list.add(cb.equal(root.get<Long>("courseId"), form.courseId))
+            }
             val p = arrayOfNulls<Predicate>(list.size)
             cb.and(*list.toArray(p))
         }
