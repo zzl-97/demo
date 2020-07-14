@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
- * @Description 试卷管理功能
+ * @Description 试题管理功能
  * @Author liuh@huayei.com
  * @Date 2020/7/7 8:56
  * @Since 1.0

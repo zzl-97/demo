@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 /**
-* @Description TODO
+* @Description 试卷管理功能
 * @Author liuh@huayei.com
 * @Date 2020/7/9 9:30
 * @Since 1.0
@@ -27,7 +27,7 @@ class TestPaperController (
     /**
      * 试卷的删除
      * @param id 试卷ID
-     * @return “删除成功！”
+     * @return 成功-删除成功！，失败-删除失败！
      */
     @Transactional(readOnly = true)
     @DeleteMapping("/del/{id}")
@@ -44,20 +44,35 @@ class TestPaperController (
     /**
      * 填写试卷名，添加试题，发布考试
      * @param testPaperDto 试题dto(填写试题名和课程id)
-     * @return
      */
     @Transactional(readOnly = true)
     @PostMapping("/add")
     fun add(@RequestBody testPaperDto : TestPaperDto , @RequestParam questionIdList: ArrayList<Long>){
-        testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId)).let {
+        testPaperRepository.save(TestPaper(null,testPaperDto.paperName,testPaperDto.courseId,0)).let {
             val list = ArrayList<TestPaperQuestion>()
             val t = TestPaperQuestion()
             for (i in 0 until questionIdList.size){
                 t.paperId = it.paperId
-                t.questionId = questionIdList.get(i)
+                t.questionId = questionIdList[i]
                 list.add(t)
             }
             testPaperQuestionRepository.saveAll(list)
         }
+    }
+
+    /**
+     * 修改试卷状态
+     * @param id 试卷id
+     * @param state 试卷状态
+     * @param paperDto 修改前的试卷信息
+     * @return
+     */
+    @PostMapping("/updateState/{id}/{state}")
+    fun updatePaper(@PathVariable id: Long,@PathVariable state: Int,@RequestBody paperDto: TestPaperDto): BaseResp{
+        return testPaperRepository.findById(id).map {
+            it.paperState = state
+            testPaperRepository.save(it)
+            BaseResp(status = 0,message = "修改成功。",data = it.dto())
+        }.orElse(BaseResp(status = 1,message = "修改失败。"))
     }
 }
