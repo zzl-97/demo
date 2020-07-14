@@ -22,7 +22,7 @@ data class TestPaper(
 
     var paperName: String? = null,//试卷名
 
-    var courseId: Int? =null,//课程id
+    var courseId: Long? =null,//课程id
 
     var paperState: Int? =0//考试状态0-启用，1-禁用
 

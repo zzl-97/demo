@@ -15,10 +15,10 @@ data class TestQuestionsDto (
     @get: Size(max = 512)
     var questionName: String? = null,
 
-    @NotBlank
+    @get: NotNull
     var questionType: String? = null,
 
-    @NotBlank
+    @get: NotNull
     @get: Size(max = 512)
     var answer: String? = null,
 
@@ -34,8 +34,8 @@ data class TestQuestionsDto (
     @get: Size(max = 64)
     var optionD: String? = null,
 
-    @NotNull
-    var courseId: Int? =null
+    @get: NotNull
+    var courseId: Long? =null
 
 ) {
     fun entity(): TestQuestions {

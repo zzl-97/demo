@@ -31,7 +31,7 @@ class TestQuestionsService(
      * 根据课程id删除试题
      * @param courseId 课程id
      */
-    fun delQuestionOf(courseId: Int) = testQuestionsRepository.findByCourseId(courseId).map {
+    fun delQuestionOf(courseId: Long) = testQuestionsRepository.findByCourseId(courseId).map {
         testQuestionsRepository.deleteByCourseId(courseId)
     }
 }

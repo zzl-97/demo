@@ -18,7 +18,7 @@ interface TestQuestionsRepository : JpaRepository <TestQuestions,Long>, JpaSpeci
 
     fun findByCourseIdAndQuestionType(courseId: Int, type: String): List<TestQuestionsDto>
 
-    fun deleteByCourseId(courseId: Int)
+    fun deleteByCourseId(courseId: Long)
 
-    fun findByCourseId(courseId: Int): List<TestQuestionsDto>
+    fun findByCourseId(courseId: Long): List<TestQuestionsDto>
 }
