@@ -6,19 +6,19 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 data class TestPaperDto (
-    @NotNull
+    @get: NotNull
     @get: Size(max = 64)
     var paperId: Long? = null,
 
-    @NotBlank
+    @get: NotNull
     @get: Size(max = 64)
     var paperName: String? = null,
 
-    @NotBlank
+    @get: NotNull
     @get: Size(max = 64)
-    var courseId: Int? = null,
+    var courseId: Long? = null,
 
-    @NotNull
+    @get: NotNull
     var paperState: Int? =0
 ) {
     fun entity(): TestPaper {

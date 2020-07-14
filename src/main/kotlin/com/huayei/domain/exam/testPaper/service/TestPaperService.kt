@@ -17,7 +17,7 @@ class TestPaperService(
      * 删除课程下的试卷和试卷试题中间表
      * @param id 课程id
      */
-    fun delPaper(id : Int) {
+    fun delPaper(id : Long) {
         var testPaperList : List<TestPaper> = testPaperRepository.findByCourseId(id)
         for (element in testPaperList) {
             element.paperId?.let { testPaperQuestionRepository.deleteByPaperId(it) }
