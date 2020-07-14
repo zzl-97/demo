@@ -3,13 +3,11 @@ package com.huayei.domain.systemManagement.entity
 import com.huayei.domain.systemManagement.dto.DTOMenu
 import javax.persistence.*
 /**
-*@Description TODO
+*@Description 菜单实体
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0
 **/
-
-
 @Entity
 @Table(name = "t_menu")
 data class Menu(

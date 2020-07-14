@@ -6,7 +6,7 @@ import javax.persistence.*
 
 
 /**
- * @Description TODO
+ * @Description 课程的实体
  * @Author liuh@huayei.com
  * @Date 2020/7/6 15:46
  * @Since 1.0

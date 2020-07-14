@@ -2,6 +2,10 @@ package com.huayei.domain.systemManagement.dto
 
 import com.huayei.domain.systemManagement.entity.User
 import java.sql.Date
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
+
 /**
 *@Description TODO
 *Author zzl@huayei.com
@@ -11,8 +15,14 @@ import java.sql.Date
 
 
 data class DTOUser(
-    var userId: Long? = null, //用户ID
+    @get:NotNull
+    var userId: Long? = null, //用户IDr
+    @get:NotBlank
+    @get:Size(max = 120)
     var userName: String? = null, //用户名
+    @get:NotBlank
+    @get:Size(max = 120)
+    var password: String? = null, //用户密码
     //var resTime: String? = null, //注册时间
     var resTime: Date? = null, //注册时间
     var type: Int? = null, //类型  0 学生 1老师

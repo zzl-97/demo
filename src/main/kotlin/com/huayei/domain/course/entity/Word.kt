@@ -5,12 +5,11 @@ import java.util.*
 import javax.persistence.*
 
 /**
- *@Description TODO
+ *@Description 作业的实体
  *Author zzl@huayei.com
  *Date 2020/7/8 17:19
  *@Since 1.0
  **/
-
 @Entity
 @Table(name = "t_word")
 data class Word(
@@ -22,7 +21,7 @@ data class Word(
 
     var wordContent: String? = null, //作业内容
 
-//    @CreatedDate
+
     var wordTime: Date = Date(), //作业时间
 
     var chapterId: Int? = null, //章节ID

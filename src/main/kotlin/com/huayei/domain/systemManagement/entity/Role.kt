@@ -3,7 +3,7 @@ package com.huayei.domain.systemManagement.entity
 import com.huayei.domain.systemManagement.dto.DTORole
 import javax.persistence.*
 /**
-*@Description TODO
+*@Description 角色的实体
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0

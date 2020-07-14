@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 /**
-*@Description TODO
+*@Description 菜单的DAO
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0

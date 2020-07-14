@@ -3,7 +3,7 @@ package com.huayei.domain.systemManagement.service
 import com.huayei.domain.systemManagement.repository.MenuRepository
 import org.springframework.stereotype.Service
 /**
-*@Description TODO
+*@Description 菜单的服务层
 *Author zzl@huayei.com
 *Date 2020/7/7 18:19
 *@Since 1.0
@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class MenuService(
-    var menuRepository: MenuRepository
-) {
+class MenuService(var menuRepository: MenuRepository) {
     /**
      * 根据用户ID查询拥有的菜单
      * @param userId 用户Id

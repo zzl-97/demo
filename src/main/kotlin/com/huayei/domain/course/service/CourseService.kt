@@ -12,7 +12,7 @@ import javax.persistence.criteria.Predicate
 import javax.persistence.criteria.Root
 
 /**
- *@Description TODO
+ *@Description 课程的服务层
  *Author zzl@huayei.com
  *Date 2020/7/8 9:15
  *@Since 1.0
@@ -29,7 +29,7 @@ class CourseService(
     /**
      * 课程的查询
      */
-    fun getCourseAll(@RequestBody courseDto: CourseDto): List<Course> {
+    fun getCourseAll( courseDto: CourseDto): List<Course> {
         val course = courseDto.entity();
         val spec: Specification<Course?> =
             Specification<Course?> { root: Root<Course?>, query: CriteriaQuery<*>, criteriaBuilder: CriteriaBuilder ->

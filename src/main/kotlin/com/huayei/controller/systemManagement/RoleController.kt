@@ -8,7 +8,7 @@ import com.huayei.domain.systemManagement.service.RoleService
 import org.springframework.web.bind.annotation.*
 
 /**
- *@Description TODO
+ *@Description 角色controller
  *Author zzl@huayei.com
  *Date 2020/7/7 18:18
  *@Since 1.0
@@ -45,12 +45,11 @@ class RoleController(val roleService: RoleService, val roleRepository: RoleRepos
      */
     @PutMapping("/updateRole/{id}")
     fun updateRole(@PathVariable id: Long, @RequestBody role: Role): BaseResp {
-        roleService.roleRepository.findById(id).map {
+        return roleService.roleRepository.findById(id).map {
             it.roleName = role.roleName
             roleService.roleRepository.save(it)
-        }.orElse(return BaseResp(message = "修改失败"))
-
-        return BaseResp(message = "修改成功")
+            BaseResp(message = "修改成功")
+        }.orElse( BaseResp(message = "修改失败"))
     }
 
 

@@ -10,8 +10,6 @@ import javax.persistence.*
  *Date 2020/7/8 9:00
  *@Since 1.0
  **/
-
-//章节表
 @Entity
 @Table(name = "t_chapter", indexes = [Index(columnList = "chapterName"), Index(columnList = "courseId")])
 data class Chapter(
