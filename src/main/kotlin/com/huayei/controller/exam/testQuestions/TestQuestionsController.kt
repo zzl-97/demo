@@ -66,7 +66,7 @@ class TestQuestionsController(
      */
     @GetMapping("/import")
     @Throws(IOException::class, BiffException::class)
-    fun excelUser(@RequestParam courseId: Int): String? {
+    fun excelUser(@RequestParam courseId: Long): String? {
         val workbook = XSSFWorkbook(FileInputStream(File("C:\\Users\\12508\\Desktop\\试题导入模板.xlsx")))
         val sheet: XSSFSheet = workbook.getSheetAt(0)
         val list: MutableList<TestQuestions> = ArrayList<TestQuestions>()
@@ -211,7 +211,7 @@ class TestQuestionsController(
      * @return 返回一个试卷信息
      */
     @PostMapping("/findByCourseId/{id}")
-    fun getQuestionByCourseId(@PathVariable id: Int): BaseResp {
+    fun getQuestionByCourseId(@PathVariable id: Long): BaseResp {
         return BaseResp(data = testQuestionsRepository.findByCourseId(id))
     }
 
